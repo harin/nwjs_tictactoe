@@ -2,14 +2,18 @@
 
 var app = require('express')();
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var server_io = require('socket.io')(http);
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
 
-io.on('connection', function(socket){
+var board = [[ 0 , 0 , 0 ],
+              [ 0 , 0 , 0 ],
+              [ 0 , 0 , 0 ]]
+
+server_io.on('connection', function(socket){
   console.log('a user connected');
   socket.on('disconnect', function(){
     console.log('user disconnected');
@@ -18,10 +22,112 @@ io.on('connection', function(socket){
 
   socket.on('chat message', function(msg){
     console.log('message: ' + msg);
-    io.emit('chat message', msg);
+    server_io.emit('chat message', msg);
   });
+
+  socket.on('server move', function(data){
+    var move = data.move;
+    console.log('server move : '+move);
+    var shouldUpdate = updateBoard(move,1,board);
+    console.log('should update =' + shouldUpdate);
+    if( shouldUpdate){
+      console.log('send board update');
+      var updateData = {
+        move: move,
+        by: 'server'
+      }
+      server_io.emit('board update', updateData);
+    }
+
+  });
+
+  socket.on('client move', function(data){
+    var move = data.move;
+    console.log('client move : ' + move);
+    if( updateBoard(move, -1, board)){
+      var updateData = {
+        move: move,
+        by: 'client'
+      }
+      server_io.emit('board update', updateData);
+    }
+  });
+
+  socket.on('restart', function(){
+    restart();
+  });
+
 });
 
-http.listen( 3000, function(){
-  console.log('listening on *:3000');
-});
+var updateBoard = function(pos, value, board){
+  var sum;
+  var ret = true;
+  var x = pos[0];
+  var y = pos[1];
+  if ( board[x][y] === 0 ){
+      board[x][y] = value;
+  } else {
+    server_io.emit('error', "That slot is taken!");
+  }
+  //Check if winner
+
+  //Check all row
+    board.forEach(function(row, index, array){
+      sum = 0;
+      row.forEach(function(slot, index, row){
+        sum += slot;
+      });
+
+      if( isComplete(sum, row.length) ) {
+        ret = false;
+      }
+    });
+
+  //Check all column
+    for( var col = 0; col< board.length; col++){
+      sum = 0;
+      for( var row = 0; row< board[col].length; row++){
+        sum += board[row][col];
+      }
+      if( isComplete(sum, board.length)) {
+        ret = false;
+      }
+    }
+  //Check diagonals
+    sum = 0;
+    for( var i= 0; i < board.length; i++) {
+      sum += board[i][i];
+    }
+    if( isComplete(sum, board.length)) ret = false
+
+    sum = 0;
+    for( var i= 0; i < board.length; i++) {
+      sum += board[i][board.length - 1 - i]
+    }
+    if( isComplete(sum, board.length)) ret = false
+    
+
+  //if no winner update board
+  return ret;
+
+}
+
+var restart = function(){
+      board = [[ 0 , 0 , 0 ],
+              [ 0 , 0 , 0 ],
+              [ 0 , 0 , 0 ]]
+}
+
+var isComplete = function(value, max){
+  if ( value == max ) {
+    server_io.emit('gameover', { winner: "server" });
+    restart();
+    return true;
+  } else if ( value == -max ) {
+    server_io.emit('gameover', { winner: "client" });
+    retart();
+    return true;
+  }
+  return false;
+}
+
