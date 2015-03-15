@@ -7,11 +7,12 @@
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }*/
- 
- button.xo {
- 	width:50px;
- 	height:50px;
- }
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+
 
  .serverMove {
  	background: red;
@@ -20,3 +21,91 @@
  .clientMove {
  	background: green;
  }
+
+header{
+    width: calc(100% - 250px);
+}
+header div{
+    
+}
+
+/* Main Section - the tictactoe board */
+#tictactoe{
+    width: 300px;
+}
+
+/*
+#tictactoe:before{
+    content: "";
+    display:block;
+    margin-top: 100%;
+    height: 0;
+}
+*/
+
+/*
+tr {
+    position: absolute;
+    height: calc(100%/3);
+}
+*/
+tr {
+    border: 1px solid black;
+    padding: 0px;
+    
+}
+.xo {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* Chat window */
+#chat-sidecart {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 250px;
+    background: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+#chat-msgbox{
+    list-style-type: none;
+    padding: 0px;
+}
+
+.chat-msg{
+    overflow-y: auto;
+    overflow-x: auto;
+    text-decoration: none;
+    border-bottom: 1px solid #eee;
+    padding: 10px
+}
+
+#chat-input {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    height: 30px;
+}
+
+#chat-input input {
+    position: absolute;
+    bottom:0;
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    width: calc(70%);
+}
+
+#chat-input button {
+    position: absolute;
+    bottom:0px;
+    right: 0px;
+    height: 100%;
+    width: calc(30%);
+}
