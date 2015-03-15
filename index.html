@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" type="text/css" href="public/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="public/font-awesome-4.3.0/css/font-awesome.min.css">
 
 
   </head>
@@ -35,7 +35,9 @@
             <button type="submit">Start</button>
           </div>
         </form>
-        <button name="restart">Restart</button>
+        <div>
+            <button name="restart">Restart</button>
+        </div>
     </header>
 
 
@@ -48,8 +50,8 @@
           </tr>
           <tr id="row1" data-row="1" class="tictactoe-row">
             <td class="xo" id="col0" data-col="0" value=0 ></td>
-            <td class="xo" id="col1" data-col="1"></td>
-            <td class="xo" id="col2" data-col="2"></td>
+            <td class="xo" id="col1" data-col="1"><i class="fa fa-times fa-5x"></i></td>
+              <td class="xo" id="col2" data-col="2"><i class="fa fa-circle-o fa-5x"></i></td>
           </tr>
           <tr id="row2" data-row="2" class="tictactoe-row">
             <td class="xo serverMove" id="col0" data-col="0"></td>
