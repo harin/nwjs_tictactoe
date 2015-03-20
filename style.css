@@ -39,7 +39,8 @@ header button{
     background: white;
     padding: 0.5em;
     border: 0;
-    width: 70px;
+    width:65px;
+
 }
 
 /* Main Section - the tictactoe board */
