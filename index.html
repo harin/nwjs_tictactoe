@@ -1,97 +1,97 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Socket.IO chat</title>
+    <head>
+        <title>Socket.IO chat</title>
 
-    <script src="public/js/jquery-1.11.2.min.js"></script>
+        <script src="public/js/jquery-1.11.2.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="public/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" type="text/css" href="public/font-awesome-4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="public/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="public/font-awesome-4.3.0/css/font-awesome.min.css">
 
 
-  </head>
-  <body>
-    <header>
-        <form action="" id="setupForm">
-          <div>
-            <label for="name">Name:</label>
-            <input type="text" id="name" />        
-          </div>
+    </head>
+    <body>
+        <header>
+            <form action="" id="setupForm">
+                <div>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" />        
+                </div>
 
-          <div>
-            <label for="ipAddress">IP Address:</label>
-            <input type="text" id="ipAddress" />        
-          </div>
+                <div>
+                    <label for="ipAddress">IP Address:</label>
+                    <input type="text" id="ipAddress" />        
+                </div>
 
-          <div>
-            <label for="port">Port:</label>
-            <input type="text" id="port" />        
-          </div>
+                <div>
+                    <label for="port">Port:</label>
+                    <input type="text" id="port" />        
+                </div>
 
-          <div>
-            <label for="role">Server:</label>
-            <input type="radio" id="role" name="role" value="server" checked="checked" />
-            <label for="role">Client:</label>
-            <input type="radio" id="role" name="role" value="client"  />         
-          </div>
+                <div>
+                    <label for="role">Server:</label>
+                    <input type="radio" id="role" name="role" value="server" checked="checked" />
+                    <label for="role">Client:</label>
+                    <input type="radio" id="role" name="role" value="client"  />         
+                </div>
 
-          <div class="button">
-            <button type="submit">Start</button>
-          </div>
-        </form>
-        <div>
-            <button name="restart">Restart</button>
+                <div class="button">
+                    <button type="submit">Start</button>
+                </div>
+            </form>
+            <div>
+                <button name="restart">Restart</button>
+            </div>
+        </header>
+
+
+        <main>
+            <table id="tictactoe">
+                <tr id="row0" data-row="0" class="tictactoe-row">
+                    <td class="xo" id="col0" data-col="0"><i></i></td>
+                    <td class="xo" id="col1" data-col="1"><i></i></td>
+                    <td class="xo" id="col2" data-col="2"><i></i></td>
+                </tr>
+                <tr id="row1" data-row="1" class="tictactoe-row">
+                    <td class="xo" id="col0" data-col="0"><i></i></td>
+                    <td class="xo" id="col1" data-col="1"><i></i></td>
+                    <td class="xo" id="col2" data-col="2"><i></i></td>
+                </tr>
+                <tr id="row2" data-row="2" class="tictactoe-row">
+                    <td class="xo" id="col0" data-col="0"><i></i></td>
+                    <td class="xo" id="col1" data-col="1"><i></i></td>
+                    <td class="xo" id="col2" data-col="2"><i></i></td>
+                </tr>
+            </table>
+        </main>
+
+        <div id="detail" class="jumbotron">
+            <label>Player's name: </label><label id="playerName"></label><br>
+            <label>Player's score: </label><label id="playerScore"></label><br>
+            <label>Opponent's name: </label><label id="opponentName"></label><br>
+            <label>Opponent's score: </label><label id="opponentScore"></label><br>
+        </div>  
+
+        <div id="chat-sidecart">
+            <ul id="chat-msgbox">
+                <li class="chat-msg">Chatbox</li>
+                <li class="chat-msg"></li>
+                <li class="chat-msg"></li>
+            </ul>
+            <form action="" id="chat-input">
+                <input id="m" autocomplete="off" type="text" />
+                <button>Send</button>
+            </form>
         </div>
-    </header>
 
 
-    <main>
-      <table id="tictactoe">
-          <tr id="row0" data-row="0" class="tictactoe-row">
-            <td class="xo" id="col0" data-col="0"><i></i></td>
-            <td class="xo" id="col1" data-col="1"><i></i></td>
-            <td class="xo" id="col2" data-col="2"><i></i></td>
-          </tr>
-          <tr id="row1" data-row="1" class="tictactoe-row">
-            <td class="xo" id="col0" data-col="0"><i></i></td>
-            <td class="xo" id="col1" data-col="1"><i></i></td>
-            <td class="xo" id="col2" data-col="2"><i></i></td>
-          </tr>
-          <tr id="row2" data-row="2" class="tictactoe-row">
-            <td class="xo" id="col0" data-col="0"><i></i></td>
-            <td class="xo" id="col1" data-col="1"><i></i></td>
-            <td class="xo" id="col2" data-col="2"><i></i></td>
-          </tr>
-        </table>
-    </main>
-     
-     <div id="detail" class="jumbotron">
-      <label>Player's name: </label><label id="playerName"></label><br>
-      <label>Player's score: </label><label id="playerScore"></label><br>
-      <label>Opponent's name: </label><label id="opponentName"></label><br>
-      <label>Opponent's score: </label><label id="opponentScore"></label><br>
-    </div>  
 
-    <div id="chat-sidecart">
-        <ul id="chat-msgbox">
-            <li class="chat-msg">Chatbox</li>
-            <li class="chat-msg"></li>
-            <li class="chat-msg"></li>
-        </ul>
-        <form action="" id="chat-input">
-            <input id="m" autocomplete="off" type="text" />
-            <button>Send</button>
-        </form>
-    </div>
+        <script type="text/javascript" src="public/js/bootstrap.min.js"></script>
+        <script src="public/js/socket.io.js"></script>
+        <script type="text/javascript" src="app.js"></script>
+        <script type="text/javascript" src="index.js"></script>
 
-   
 
-    <script type="text/javascript" src="public/js/bootstrap.min.js"></script>
-    <script src="public/js/socket.io.js"></script>
-    <script type="text/javascript" src="app.js"></script>
-    <script type="text/javascript" src="index.js"></script>
-      
-
-  </body>
+    </body>
 </html>
