@@ -14,10 +14,9 @@ body{
 *{
     margin: 0px;
     padding: 0px;
-/*    border: 1px solid black;*/
+    font-size: 20px;
+    /*border: 1px solid black;*/
 }
-
-
 
 header{
     display: fixed;
@@ -39,8 +38,10 @@ header button{
     background: white;
     padding: 0.5em;
     border: 0;
-    width:65px;
-
+    width: 100px;
+}
+#port{
+    width: 80px;
 }
 
 /* Main Section - the tictactoe board */
@@ -142,7 +143,7 @@ fa {
 
 #chat-input input:focus {
     background: #eee;
-    outline:0;
+    outline: 0;
 }
 
 #chat-input button {
@@ -153,7 +154,7 @@ fa {
     bottom:0px;
     right: 0px;
     height: 100%;
-    width: calc(30%);
+    width: calc(40%);
     background: rgb(233,110,80);
     border:0;
 }
