@@ -10,7 +10,6 @@ var client_socket;
   });*/
 $('form#setupForm').submit(function(){
     name = $('#name').val();
-
     role = $('input[name=role]:checked', '#setupForm').val();
     ip = $('#ipAddress').val();
     port = $('#port').val();
@@ -53,10 +52,11 @@ $('form#setupForm').submit(function(){
     }
 
     if(client_socket) {
-        //Change connect button to Disconnect
         if( role === "server"){
+            //Change Start button to Stop
             $('form#setupForm button').html('Stop');
         } else {
+            //Change connect button to Disconnect
             $('form#setupForm button').html('Disconnect');
         }
     }
@@ -157,8 +157,11 @@ $('.xo').on('click', function(e){
     client_socket.emit( role +' move', data );
 })
 
-$('button[name=stop]').on('click', function(e){
+$('#start-stop-btn').on('click', function(e){
+    if($('#start-stop-btn').text() === 'Stop'){
+    $('#start-stop-btn').html('Start');
     http.close();
+    }
 });
 
 $('button[name=restart]').on('click', function(e){
