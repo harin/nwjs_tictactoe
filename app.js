@@ -4,6 +4,11 @@ var app = require('express')();
 var http = require('http').Server(app);
 var server_io = require('socket.io')(http);
 
+$(document).ready(function(){
+  console.log("Welcome Message!!");
+    alert("Welcome!!");
+});
+  
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
@@ -15,10 +20,18 @@ var board = [[ 0 , 0 , 0 ],
 
 server_io.on('connection', function(socket){
   console.log('a user connected');
+  alert("Welcome to the game!");
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
 
+server_io.on('opponentName', function(data){
+  console.log('data');
+  alert("Your opponent is "+data);
+  document.getElementById("opponentName").innerHTML = data;
+  document.getElementById("opponentScore").innerHTML = 0;
+
+});
 
   socket.on('chat message', function(msg){
     console.log('message: ' + msg);
