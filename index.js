@@ -88,6 +88,9 @@ $('form#setupForm').submit(function(){
         }
     });
 
+    client_socket.on('noConnections', function(noConnections){
+      $('#chatbox-title').html('Chatbox ('+noConnections+')');
+    });
 
     /*
   Chat
