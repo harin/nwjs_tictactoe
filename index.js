@@ -14,47 +14,6 @@ var opponentScore=0;
 
 
 $('form#setupForm').submit(function(){
-    /*<<<<<<< HEAD
-    name = $('#name').val();
-    console.log(name);
-
-    role = $('input[name=role]:checked', '#setupForm').val();
-    ip = $('#ipAddress').val();
-    port = $('#port').val();
-
-    if (role === "server"){
-        //is server
-        alert("I'm " +name) ;
-        //if not running -> start listening
-        document.getElementById("playerName").innerHTML = name;
-        document.getElementById("playerScore").innerHTML = 0;
-
-
-
-        http.listen( port, function(){
-            console.log('listening on *:' + port);
-        });
-
-        client_socket = io('http://localhost:' + port);
-        client_socket.emit('opponentName', name);
-
-        // client_socket = io('http://localhost:3000');
-    } else {
-        //is client
-        alert("I'm " +name) ;
-        if (!client_socket){
-            //If doesn't exist, create a new one and connect
-            client_socket = io('http://' + ip + ':' + port );
-        } else {
-            if ( client_socket.disconnected ) {
-                // If not connected, connect
-                client_socket.connect('http://localhost:' +port, {forceNew: true});
-            } else {
-                // If connected, disconnect
-                client_socket.disconnect();
-            }
-        }
-=======*/
     name = $('#name').val();
 
     role = $('input[name=role]:checked', '#setupForm').val();
@@ -129,6 +88,9 @@ $('form#setupForm').submit(function(){
         }
     });
 
+    client_socket.on('noConnections', function(noConnections){
+      $('#chatbox-title').html('Chatbox ('+noConnections+')');
+    });
 
     /*
   Chat

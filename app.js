@@ -24,6 +24,7 @@ var board = [[ 0 , 0 , 0 ],
 
 var serverName = "";
 var clientName = "";
+var noConnections = 0;
 
 /**************************************************** 
                      Methods
@@ -34,9 +35,11 @@ server_io.on('connection', function(socket){
     console.log('a user connected');
     alert("Welcome to the game!");
     server_io.emit('serverName', serverName);
+    server_io.emit('noConnections', ++noConnections);
 
     socket.on('disconnect', function(){
         console.log('user disconnected');
+        server_io.emit('noConnections', --noConnections);
     });
 
     socket.on('serverName', function(data){
