@@ -2,17 +2,12 @@ var role;
 var ip;
 var port;
 var client_socket;
-var playerScore=0;
-var opponentScore=0;
-
 
 /*$(document).ready(function(){
   console.log("Welcome Message!!");
     alert("Welcome!!");
 
   });*/
-
-
 $('form#setupForm').submit(function(){
     name = $('#name').val();
 
@@ -88,6 +83,10 @@ $('form#setupForm').submit(function(){
         }
     });
 
+
+    /******************************************************** 
+                      Reactive Variables
+     *********************************************************/
     client_socket.on('noConnections', function(noConnections){
       $('#chatbox-title').html('Chatbox ('+noConnections+')');
     });

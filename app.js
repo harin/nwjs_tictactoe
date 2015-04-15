@@ -25,6 +25,8 @@ var board = [[ 0 , 0 , 0 ],
 var serverName = "";
 var clientName = "";
 var noConnections = 0;
+var serverScore = 0;
+var clientScore = 0;
 
 /**************************************************** 
                      Methods
@@ -36,6 +38,20 @@ server_io.on('connection', function(socket){
     alert("Welcome to the game!");
     server_io.emit('serverName', serverName);
     server_io.emit('noConnections', ++noConnections);
+
+    if(noConnections == 2) {
+      //ready to start game
+      var starter = Math.round(Math.random):
+      if (starter === 1 ){
+        // let server start
+        server_io.emit('turn', 'server');
+      } else {
+        // let client start
+        server_io.emit('turn', 'client');
+      }
+    } else {
+      server_io.emit('turn', 'unknown');
+    }
 
     socket.on('disconnect', function(){
         console.log('user disconnected');
@@ -71,6 +87,7 @@ server_io.on('connection', function(socket){
                 by: 'server'
             }
             server_io.emit('board update', updateData);
+            server_io.emit('turn', 'client');
         }
 
     });
@@ -84,6 +101,7 @@ server_io.on('connection', function(socket){
                 by: 'client'
             }
             server_io.emit('board update', updateData);
+            server_io.emit('turn', 'server');
         }
     });
 
@@ -142,7 +160,6 @@ var updateBoard = function(pos, value, board){
 
     //if no winner update board
     return ret;
-
 }
 
 var restart = function(){
