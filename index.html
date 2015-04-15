@@ -15,8 +15,13 @@
     <header>
         <form action="" id="setupForm">
           <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" />        
+          </div>
+
+          <div>
             <label for="ipAddress">IP Address:</label>
-            <input type="text" id="ipAddress"/>        
+            <input type="text" id="ipAddress" />        
           </div>
 
           <div>
@@ -26,9 +31,9 @@
 
           <div>
             <label for="role">Server:</label>
-            <input type="radio" id="role" name="role" value="server" checked="checked"/>
+            <input type="radio" id="role" name="role" value="server" checked="checked" />
             <label for="role">Client:</label>
-            <input type="radio" id="role" name="role" value="client" />         
+            <input type="radio" id="role" name="role" value="client"  />         
           </div>
 
           <div class="button">
@@ -60,11 +65,17 @@
           </tr>
         </table>
     </main>
-    
+     
+     <div id="detail" class="jumbotron">
+      <label>Player's name: </label><label id="playerName"></label><br>
+      <label>Player's score: </label><label id="playerScore"></label><br>
+      <label>Opponent's name: </label><label id="opponentName"></label><br>
+      <label>Opponent's score: </label><label id="opponentScore"></label><br>
+    </div>  
 
     <div id="chat-sidecart">
         <ul id="chat-msgbox">
-            <li class="chat-msg">Hey uadfadsfassfadsfadsf adsfasdfasdf asdfadsf asdfasdffasd</li>
+            <li class="chat-msg">Chatbox</li>
             <li class="chat-msg"></li>
             <li class="chat-msg"></li>
         </ul>
@@ -73,6 +84,8 @@
             <button>Send</button>
         </form>
     </div>
+
+   
 
     <script type="text/javascript" src="public/js/bootstrap.min.js"></script>
     <script src="public/js/socket.io.js"></script>
