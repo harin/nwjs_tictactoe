@@ -4,6 +4,10 @@ var port;
 var client_socket;
 var playerScore=0;
 var opponentScore=0;
+<<<<<<< Updated upstream
+=======
+// var server_io = require('socket.io')(http);
+>>>>>>> Stashed changes
 
 /*$(document).ready(function(){
   console.log("Welcome Message!!");
