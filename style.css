@@ -91,7 +91,7 @@ fa {
  }
 
  .clientMove {
- 	background: green;
+ 	/*background: green;*/
  }
 
 
@@ -157,3 +157,17 @@ fa {
     background: rgb(233,110,80);
     border:0;
 }
+
+/*Player's Detail*/
+#detail{
+    position: fixed;
+    top: 70%;
+    bottom: 5px;
+    width: 40%;
+    left: 15%;
+    right: 40%;
+    font-size: 18;
+    margin-left: 10;
+}
+
+
