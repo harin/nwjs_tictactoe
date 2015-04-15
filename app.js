@@ -89,6 +89,8 @@ server_io.on('connection', function(socket){
     });
 
 });
+
+
 var updateBoard = function(pos, value, board){
     var sum;
     var ret = true;

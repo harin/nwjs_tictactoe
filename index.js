@@ -14,49 +14,7 @@ var opponentScore=0;
 
 
 $('form#setupForm').submit(function(){
-    /*<<<<<<< HEAD
     name = $('#name').val();
-    console.log(name);
-
-    role = $('input[name=role]:checked', '#setupForm').val();
-    ip = $('#ipAddress').val();
-    port = $('#port').val();
-
-    if (role === "server"){
-        //is server
-        alert("I'm " +name) ;
-        //if not running -> start listening
-        document.getElementById("playerName").innerHTML = name;
-        document.getElementById("playerScore").innerHTML = 0;
-
-
-
-        http.listen( port, function(){
-            console.log('listening on *:' + port);
-        });
-
-        client_socket = io('http://localhost:' + port);
-        client_socket.emit('opponentName', name);
-
-        // client_socket = io('http://localhost:3000');
-    } else {
-        //is client
-        alert("I'm " +name) ;
-        if (!client_socket){
-            //If doesn't exist, create a new one and connect
-            client_socket = io('http://' + ip + ':' + port );
-        } else {
-            if ( client_socket.disconnected ) {
-                // If not connected, connect
-                client_socket.connect('http://localhost:' +port, {forceNew: true});
-            } else {
-                // If connected, disconnect
-                client_socket.disconnect();
-            }
-        }
-=======*/
-    name = $('#name').val();
-
     role = $('input[name=role]:checked', '#setupForm').val();
     ip = $('#ipAddress').val();
     port = $('#port').val();
@@ -99,10 +57,11 @@ $('form#setupForm').submit(function(){
     }
 
     if(client_socket) {
-        //Change connect button to Disconnect
         if( role === "server"){
+            //Change Start button to Stop
             $('form#setupForm button').html('Stop');
         } else {
+            //Change connect button to Disconnect
             $('form#setupForm button').html('Disconnect');
         }
     }
@@ -196,8 +155,11 @@ $('.xo').on('click', function(e){
     client_socket.emit( role +' move', data );
 })
 
-$('button[name=stop]').on('click', function(e){
+$('#start-stop-btn').on('click', function(e){
+    if($('#start-stop-btn').text() === 'Stop'){
+    $('#start-stop-btn').html('Start');
     http.close();
+    }
 });
 
 $('button[name=restart]').on('click', function(e){
