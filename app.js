@@ -13,25 +13,41 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
+/**************************************************** 
+                     Properties
+*****************************************************/
+
 
 var board = [[ 0 , 0 , 0 ],
               [ 0 , 0 , 0 ],
               [ 0 , 0 , 0 ]]
 
+var serverName = "";
+var clientName = "";
+
+/**************************************************** 
+                     Methods
+*****************************************************/
 server_io.on('connection', function(socket){
   console.log('a user connected');
   alert("Welcome to the game!");
+  server_io.emit('serverName', serverName);
+
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
 
-server_io.on('opponentName', function(data){
-  console.log('data');
-  alert("Your opponent is "+data);
-  document.getElementById("opponentName").innerHTML = data;
-  document.getElementById("opponentScore").innerHTML = 0;
+  socket.on('serverName', function(data){
+    console.log('serverName='+data);
+    serverName = data;
+    server_io.emit('serverName', data);
+  });
 
-});
+  socket.on('clientName', function(data){
+    console.log('clientName='+data);
+    clientName = data
+    server_io.emit('clientName', data);
+  });
 
   socket.on('chat message', function(msg){
     console.log('message: ' + msg);

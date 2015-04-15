@@ -4,7 +4,6 @@ var port;
 var client_socket;
 var playerScore=0;
 var opponentScore=0;
-var server_io = require('socket.io')(http);
 
 /*$(document).ready(function(){
   console.log("Welcome Message!!");
@@ -15,44 +14,46 @@ var server_io = require('socket.io')(http);
 
 $('form#setupForm').submit(function(){
   name = $('#name').val();
-  console.log(name);
   
   role = $('input[name=role]:checked', '#setupForm').val();
   ip = $('#ipAddress').val();
   port = $('#port').val();
+  $('#playerName').html(name);
+  $('#playerScore').html(0);
+  
 
   if (role === "server"){
-  //is server
-  alert("I'm " +name) ;
-  //if not running -> start listening
-  document.getElementById("playerName").innerHTML = name;
-  document.getElementById("playerScore").innerHTML = 0;
-  
-  
-  
-  http.listen( port, function(){
-    console.log('listening on *:' + port);
-  });
+    //is server
+    alert("I'm " +name) ;
+    //if not running -> start listening
 
-  client_socket = io('http://localhost:' + port);
-  client_socket.emit('opponentName', name);
+    
+    http.listen( port, function(){
+      console.log('listening on *:' + port);
+    });
 
-  // client_socket = io('http://localhost:3000');
-} else {
-  //is client
-  alert("I'm " +name) ;
-  if (!client_socket){
-    //If doesn't exist, create a new one and connect
-    client_socket = io('http://' + ip + ':' + port );
+    client_socket = io('http://localhost:' + port);
+    client_socket.emit('serverName', name);
+
+    // client_socket = io('http://localhost:3000');
   } else {
-    if ( client_socket.disconnected ) {
-      // If not connected, connect
-      client_socket.connect('http://localhost:' +port, {forceNew: true});
-    } else {
-      // If connected, disconnect
-      client_socket.disconnect();
-    }
-  }
+  //is client
+    alert("I'm " +name) ;
+    if (!client_socket){
+      //If doesn't exist, create a new one and connect
+      client_socket = io('http://' + ip + ':' + port );
+    } 
+
+    client_socket.emit('clientName', name);
+
+
+    // if ( client_socket.disconnected ) {
+    //   // If not connected, connect
+    //   client_socket.connect('http://localhost:' +port, {forceNew: true});
+    // } else {
+    //   // If connected, disconnect
+    //   client_socket.disconnect();
+    // }
 }
 
 if(client_socket) {
@@ -63,6 +64,30 @@ if(client_socket) {
     $('form#setupForm button').html('Disconnect');
   }
 }
+
+//sockets stuff
+
+  client_socket.on('serverName', function(name){
+    console.log("got server name="+name);
+    console.log("my role is "+ role);
+    if (role === 'client'){
+      //set opponent name
+      $('#opponentName').html(name);
+      $('#opponentScore').html(0);    
+    }
+  }); 
+
+  client_socket.on('clientName', function(name){
+    console.log("got client name="+name);
+    console.log("my role is "+role);
+    if (role === 'server'){
+      //set opponent name
+      $('#opponentName').html(name);
+      $('#opponentScore').html(0); 
+    }
+  });
+
+
 
 /*
   Chat
