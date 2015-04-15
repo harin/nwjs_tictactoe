@@ -9,6 +9,7 @@ var opponentScore=0;
 // var server_io = require('socket.io')(http);
 >>>>>>> Stashed changes
 
+
 /*$(document).ready(function(){
   console.log("Welcome Message!!");
     alert("Welcome!!");
@@ -18,7 +19,6 @@ var opponentScore=0;
 
 $('form#setupForm').submit(function(){
   name = $('#name').val();
-  
   role = $('input[name=role]:checked', '#setupForm').val();
   ip = $('#ipAddress').val();
   port = $('#port').val();
@@ -27,19 +27,28 @@ $('form#setupForm').submit(function(){
   
 
   if (role === "server"){
-    //is server
-    alert("I'm " +name) ;
-    //if not running -> start listening
 
-    
-    http.listen( port, function(){
-      console.log('listening on *:' + port);
-    });
+  //is server
+  alert("I'm " +name) ;
+  //if not running -> start listening
+  
+  http.listen(port, function(){
+    console.log('listening on *:' + port);
+  });
+
 
     client_socket = io('http://localhost:' + port);
     client_socket.emit('serverName', name);
 
-    // client_socket = io('http://localhost:3000');
+  // client_socket = io('http://localhost:3000');
+} else {
+  //is client
+  alert("I'm " +name) ;
+  
+  if (!client_socket){
+    //If doesn't exist, create a new one and connect
+    client_socket = io('http://' + ip + ':' + port );
+
   } else {
   //is client
     alert("I'm " +name) ;
@@ -134,17 +143,7 @@ if(client_socket) {
 
   return false;
 });
-/*
-  Send Name
-*/
-/*   client_socket.on('opponentName', function(data){
-    console.log(data);
-    alert("Your opponent is " + data);
-    document.getElementById("opponentName").innerHTML = name;
-    document.getElementById("opponentScore").innerHTML = 0;
-  });
-*/
-/*
+
 
 jQuery stuff
 
@@ -171,7 +170,8 @@ $('.xo').on('click', function(e){
 })
 
 $('button[name=stop]').on('click', function(e){
-  http.close();
+    http.close();
+
 });
 
 $('button[name=restart]').on('click', function(e){

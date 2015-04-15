@@ -37,11 +37,13 @@ server_io.on('connection', function(socket){
     console.log('user disconnected');
   });
 
+
   socket.on('serverName', function(data){
     console.log('serverName='+data);
     serverName = data;
     server_io.emit('serverName', data);
   });
+
 
   socket.on('clientName', function(data){
     console.log('clientName='+data);
