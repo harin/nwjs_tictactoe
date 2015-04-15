@@ -5,6 +5,7 @@ var client_socket;
 var playerScore=0;
 var opponentScore=0;
 
+
 /*$(document).ready(function(){
   console.log("Welcome Message!!");
     alert("Welcome!!");
@@ -53,18 +54,6 @@ $('form#setupForm').submit(function(){
                 client_socket.disconnect();
             }
         }
-    }
-
-    if(client_socket) {
-        //Change connect button to Disconnect
-        if( role === "server"){
-            $('form#setupForm button').html('Stop');
-        } else {
-            $('form#setupForm button').html('Disconnect');
-        }
-    }
-
-    /*
 =======*/
     name = $('#name').val();
 
@@ -141,9 +130,7 @@ $('form#setupForm').submit(function(){
     });
 
 
-
     /*
->>>>>>> 0369bb8536f142128b5f50c55435565bf4170302
   Chat
   */
 
@@ -184,20 +171,9 @@ $('form#setupForm').submit(function(){
 
     return false;
 });
-/*
-  Send Name
-*/
-/*   client_socket.on('opponentName', function(data){
-    console.log(data);
-    alert("Your opponent is " + data);
-    document.getElementById("opponentName").innerHTML = name;
-    document.getElementById("opponentScore").innerHTML = 0;
-  });
-*/
-/*
 
+/*
 jQuery stuff
-
 */
 
 $('form#chat').submit(function(){

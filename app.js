@@ -31,21 +31,6 @@ var clientName = "";
 
 
 server_io.on('connection', function(socket){
-    /*<<<<<<< HEAD
-    console.log('a user connected');
-    alert("Welcome to the game!");
-    socket.on('disconnect', function(){
-        console.log('user disconnected');
-    });
-
-    server_io.on('opponentName', function(data){
-        console.log('data');
-        alert("Your opponent is "+data);
-        document.getElementById("opponentName").innerHTML = data;
-        document.getElementById("opponentScore").innerHTML = 0;
-=======*/
-
-
     console.log('a user connected');
     alert("Welcome to the game!");
     server_io.emit('serverName', serverName);
@@ -65,9 +50,6 @@ server_io.on('connection', function(socket){
         clientName = data
         server_io.emit('clientName', data);
     });
-    //>>>>>>> 0369bb8536f142128b5f50c55435565bf4170302
-
-    //});
 
     socket.on('chat message', function(msg){
         console.log('message: ' + msg);
@@ -173,7 +155,7 @@ var isComplete = function(value, max){
         return true;
     } else if ( value == -max ) {
         server_io.emit('gameover', { winner: "client" });
-        retart();
+        restart();
         return true;
     }
     return false;
