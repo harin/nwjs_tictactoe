@@ -13,12 +13,25 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
 
+/**************************************************** 
+                     Properties
+*****************************************************/
+
 
 var board = [[ 0 , 0 , 0 ],
              [ 0 , 0 , 0 ],
              [ 0 , 0 , 0 ]]
 
+var serverName = "";
+var clientName = "";
+
+/**************************************************** 
+                     Methods
+*****************************************************/
+
+
 server_io.on('connection', function(socket){
+    /*<<<<<<< HEAD
     console.log('a user connected');
     alert("Welcome to the game!");
     socket.on('disconnect', function(){
@@ -30,8 +43,31 @@ server_io.on('connection', function(socket){
         alert("Your opponent is "+data);
         document.getElementById("opponentName").innerHTML = data;
         document.getElementById("opponentScore").innerHTML = 0;
+=======*/
 
+
+    console.log('a user connected');
+    alert("Welcome to the game!");
+    server_io.emit('serverName', serverName);
+
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
     });
+
+    socket.on('serverName', function(data){
+        console.log('serverName='+data);
+        serverName = data;
+        server_io.emit('serverName', data);
+    });
+
+    socket.on('clientName', function(data){
+        console.log('clientName='+data);
+        clientName = data
+        server_io.emit('clientName', data);
+    });
+    //>>>>>>> 0369bb8536f142128b5f50c55435565bf4170302
+
+    //});
 
     socket.on('chat message', function(msg){
         console.log('message: ' + msg);
@@ -71,7 +107,6 @@ server_io.on('connection', function(socket){
     });
 
 });
-
 var updateBoard = function(pos, value, board){
     var sum;
     var ret = true;
