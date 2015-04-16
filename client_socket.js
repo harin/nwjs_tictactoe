@@ -36,6 +36,7 @@ $('form#setupForm').submit(function(){
         } 
 
         client_socket.emit('clientName', name);
+        client_socket.emit('resetBoard', '');
     }
 
     if(client_socket) {
