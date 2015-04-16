@@ -93,7 +93,15 @@ server_io.on('connection', function(socket){
             server_io.emit('board update', updateData);
             server_io.emit('turn', 'client');
         }
+    });
 
+    socket.on('restart', function(data){
+        console.log('received restart request');
+        restart();
+    });
+
+    socket.on('resetBoard', function(data){
+        resetBoard();
     });
 
     socket.on('client move', function(data){
@@ -176,12 +184,15 @@ var restart = function(){
   resetBoard();
   serverScore = 0;
   clientScore = 0;
+  server_io.emit('serverScore', serverScore);
+  server_io.emit('clientScore', clientScore);
 }
 
 var resetBoard = function(){
-      board = [[ 0 , 0 , 0 ],
+    board = [[ 0 , 0 , 0 ],
              [ 0 , 0 , 0 ],
              [ 0 , 0 , 0 ]];
+    server_io.emit('resetBoard', '');
 }
 
 var isComplete = function(value, max){

@@ -26,18 +26,24 @@ $('#start-stop-btn').on('click', function(e){
     }
 });
 
+
 $('button[name=restart]').on('click', function(e){
-    console.log("restart pressed");
-    reset_board();
-    client_socket.emit('restart', '');
+    console.log("restart pressed on "+role);
+    if( role === 'server') {
+        client_socket.emit('restart', '');
+    } else {
+        client_socket.emit('resetBoard','');
+    }
 });
 
 $('form#setupForm input[type=radio]').on('click', function(e){
     var role = $('input[name=role]:checked', '#setupForm').val();
     if( role === "server"){
         $('form#setupForm button').html('Start');
+        $('button[name=restart]').html('Restart');
     } else {
         $('form#setupForm button').html('Connect');
+        $('button[name=restart]').html('Reset Board');
     }
 });
 

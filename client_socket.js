@@ -72,6 +72,11 @@ $('form#setupForm').submit(function(){
             $('#opponentScore').html(0); 
         }
     });
+
+    client_socket.on('resetBoard', function(data){
+        reset_board();
+    });
+
     /******************************************************** 
                       Reactive Variables
      *********************************************************/
