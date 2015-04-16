@@ -1,4 +1,5 @@
     var lastTurn;
+    var starter;
 
 /*
 jQuery stuff*/
@@ -27,7 +28,8 @@ $('.xo').on('click', function(e){
     console.log(row +','+col);
 
     var data = {
-        move: [row,col]
+        move: [row,col],
+        starter: starter
     }
 
     $(this).addClass(role+'Move');
@@ -62,6 +64,16 @@ $('#start-stop-btn').on('click', function(e){
 
 $('button[name=restart]').on('click', function(e){
     console.log("restart pressed on "+role);
+    // var randomVal = Math.random()*10;
+    // console.log("random: "+randomVal);
+    // if(randomVal<5){
+    //     lastTurn='server';
+    //     starter = 'client';
+    // }
+    // else{
+    //     lastTurn='client';
+    //     starter= 'server';
+    // }
     if( role === 'server') {
         console.log("client_socket="+client_socket);
         client_socket.emit('restart', '');
@@ -84,15 +96,18 @@ $('#role').on('change', function(e){
 var reset_board = function(){
     $('.xo i').attr('class', '');
     // data.lastTurn = "";
-    var randomVal = Math.random()*10;
-    if(randomVal<5){
-        lastTurn='server';
-    }
-    else{
-        lastTurn='client';
-    }
-    console.log("not start= "+ lastTurn);
-    alert(lastTurn+"player will not start");
+    // var randomVal = Math.random()*10;
+    // // var starter;
+    // if(randomVal<5){
+    //     lastTurn='server';
+    //     starter = 'client';
+    // }
+    // else{
+    //     lastTurn='client';
+    //     starter= 'server';
+    // }
+    // console.log("starter when reset board: "+ starter);
+    // alert(starter+" will start first");
 };
 
 

@@ -79,7 +79,10 @@ $('form#setupForm').submit(function(){
     });
 
     client_socket.on('resetBoard', function(data){
-        reset_board();
+       lastTurn=data.lastTurn;
+       starter=data.starter;
+       reset_board();
+       alert(starter+" gets to starts");
     });
 
     /******************************************************** 

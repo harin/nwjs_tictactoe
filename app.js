@@ -111,6 +111,7 @@ server_io.on('connection', function(socket){
 
     socket.on('restart', function(data){
         console.log('received restart request');
+        // console.log(data.starter+' will get to start');
         restart();
     });
 
@@ -136,9 +137,9 @@ server_io.on('connection', function(socket){
         }
     });
 
-    socket.on('restart', function(){
-        restart();
-    });
+    // socket.on('restart', function(){
+    //     restart();
+    // });
 
 });
 
@@ -211,7 +212,18 @@ var resetBoard = function(){
     board = [[ 0 , 0 , 0 ],
              [ 0 , 0 , 0 ],
              [ 0 , 0 , 0 ]];
-    server_io.emit('resetBoard', '');
+    var randomVal = Math.random()*10;
+    console.log("random: "+randomVal);
+    var data={};
+    if(randomVal<5){
+        data.lastTurn='server';
+        data.starter = 'client';
+    }
+    else{
+        data.lastTurn='client';
+        data.starter= 'server';
+    }
+    server_io.emit('resetBoard', data);
 }
 
 var isComplete = function(value, max){
