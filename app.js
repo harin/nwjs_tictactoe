@@ -3,11 +3,21 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var server_io = require('socket.io')(http);
-
+var firstTurn = {};
 
 $(document).ready(function(){
-    console.log("Welcome Message!!");
     alert("Welcome!!");
+    var randomVal = Math.random()*10;
+   
+    if(randomVal < 5){
+        firstTurn.first = 'client';
+        firstTurn.second = 'server';
+    }
+    else{
+        firstTurn.first= 'server';
+        firstTurn.second= 'client'
+    }
+    console.log("first round= "+firstTurn);
 });
 
 app.get('/', function(req, res){
@@ -44,6 +54,9 @@ server_io.on('connection', function(socket){
     server_io.emit('noConnections', ++noConnections);
     server_io.emit('serverScore', serverScore);
     server_io.emit('clientScore', clientScore);
+    
+    server_io.emit('first turn', firstTurn);
+
     // resetBoard();
     // if(noConnections == 2) {
       //ready to start game

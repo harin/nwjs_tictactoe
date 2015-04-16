@@ -33,10 +33,11 @@ $('form#setupForm').submit(function(){
         if (!client_socket){
             //If doesn't exist, create a new one and connect
             client_socket = io('http://' + ip + ':' + port );
+            client_socket.emit('clientName', name);
         } 
 
-        client_socket.emit('clientName', name);
-        client_socket.emit('resetBoard', '');
+        
+        //client_socket.emit('resetBoard', '');
     }
 
     if(client_socket) {
@@ -53,6 +54,21 @@ $('form#setupForm').submit(function(){
 
 
     //sockets stuff
+    client_socket.on('first turn', function(data){
+        starter = data.first;
+        lastTurn = data.second;
+        //console.log("firstStarter= "+ starter);
+        if(starter === 'server'){
+            $('#serverBoard label').css("color","black");
+
+        }else{
+            $('#clientBoard label').css("color","black");
+
+        }
+        // alert(starter+ " plays first.");
+    });
+
+
     client_socket.on('serverName', function(name){
         console.log("got server name="+name);
         console.log("my role is "+ role);
@@ -79,8 +95,17 @@ $('form#setupForm').submit(function(){
     client_socket.on('resetBoard', function(data){
        lastTurn=data.lastTurn;
        starter=data.starter;
+       
+       if(starter === 'server'){
+            $('#serverBoard label').css("color","black");
+
+        }else{
+            $('#clientBoard label').css("color","black");
+
+        }
+
        reset_board();
-       alert(starter+" gets to starts");
+       // alert(starter+" gets to starts");
     });
 
     /******************************************************** 
@@ -154,6 +179,17 @@ $('form#setupForm').submit(function(){
     client_socket.on('lastTurn', function (e) {
         console.log("Last turn =" + e);
         lastTurn = e;
+
+        if(lastTurn !== 'server'){
+            $('#serverBoard label').css("color","black");
+            $('#clientBoard label').css("color","white");
+
+        }else{
+            $('#clientBoard label').css("color","black");
+            $('#serverBoard label').css("color","white");
+
+
+        }
     });
 
     return false;
