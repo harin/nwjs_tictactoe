@@ -8,7 +8,9 @@ $('#send').on('click', function(){
 
     if (client_socket) {
         console.log("submitting chat");
-        var msg = $('#m').val();
+        var msg={};
+        msg.name = name;
+        msg.text = $('#m').val();
         console.log("my msg= "+ msg);
        // $('#chat-msgbox').append("<li>me: "+msg+"</li>");
         client_socket.emit('chat message', msg);

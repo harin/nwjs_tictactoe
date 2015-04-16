@@ -115,10 +115,10 @@ $('form#setupForm').submit(function(){
     
     client_socket.on('chat message', function(msg){
         console.log("message from server: "+ msg);
-        $('#chat-msgbox').append("<li>"+msg+"</li>");     
+        //$('#chat-msgbox').append("<li>"+msg+"</li>");     
   
         // if(role==="client"){
-        //     $('#chat-msgbox').append("<li>"+opponentName+": "+msg+"</li>");     
+            $('#chat-msgbox').append("<li>"+msg.name+": "+msg.text+"</li>");     
         // }else{
         //     $('#chat-msgbox').append("<li>"+name+": "+msg+"</li>");     
         // }
