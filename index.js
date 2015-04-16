@@ -1,3 +1,4 @@
+    var lastTurn;
 
 /*
 jQuery stuff*/
@@ -13,10 +14,10 @@ $('#send').on('click', function(){
         msg.text = $('#m').val();
         console.log("my msg= "+ msg);
        // $('#chat-msgbox').append("<li>me: "+msg+"</li>");
-        client_socket.emit('chat message', msg);
+       client_socket.emit('chat message', msg);
 
-    }
-    return false;
+   }
+   return false;
 });
 
 $('.xo').on('click', function(e){
@@ -30,6 +31,16 @@ $('.xo').on('click', function(e){
 
     $(this).addClass(role+'Move');
     client_socket.emit( role +' move', data );
+    if (role == lastTurn)
+    {
+        alert("can't Move");
+    }
+    else
+    {
+        data.turn = role;
+        $(this).addClass(role + 'Move');
+        client_socket.emit(role + ' move', data);
+    }
 });
 
 $('#start-stop-btn').on('click', function(e){

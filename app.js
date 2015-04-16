@@ -3,6 +3,7 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var server_io = require('socket.io')(http);
+var turn = "";
 
 $(document).ready(function(){
     console.log("Welcome Message!!");
@@ -82,6 +83,10 @@ server_io.on('connection', function(socket){
     socket.on('server move', function(data){
         var move = data.move;
         console.log('server move : '+move);
+        if(turn == data.turn){
+            alert("can't Move");
+        }
+        else{
         var shouldUpdate = updateBoard(move,1,board);
         console.log('should update =' + shouldUpdate);
         if( shouldUpdate){
@@ -90,8 +95,10 @@ server_io.on('connection', function(socket){
                 move: move,
                 by: 'server'
             }
+            turn = data.turn;
             server_io.emit('board update', updateData);
-            server_io.emit('turn', 'client');
+            server_io.emit('turn', turn);
+        }
         }
     });
 
@@ -107,14 +114,17 @@ server_io.on('connection', function(socket){
     socket.on('client move', function(data){
         var move = data.move;
         console.log('client move : ' + move);
+        if(turn!=data.turn){
         if( updateBoard(move, -1, board)){
             var updateData = {
                 move: move,
                 by: 'client'
             }
             server_io.emit('board update', updateData);
-            server_io.emit('turn', 'server');
+            turn = data.turn;
+            server_io.emit('turn', turn);
         }
+    }
     });
 
     socket.on('restart', function(){

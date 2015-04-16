@@ -154,5 +154,11 @@ $('form#setupForm').submit(function(){
         alert(msg);
     });
 
+    /* Get Turn*/
+    client_socket.on("turn", function (e) {
+        console.log("Last turn =" + e);
+        lastTurn = e;
+    });
+
     return false;
 });
