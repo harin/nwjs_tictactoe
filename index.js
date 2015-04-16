@@ -1,7 +1,18 @@
-$('form#chat').submit(function(){
+
+/*
+jQuery stuff*/
+
+
+$('#send').on('click', function(){
+    console.log("click send");
+
     if (client_socket) {
         console.log("submitting chat");
-        client_socket.emit('chat message', $('#m').val());
+        var msg = $('#m').val();
+        console.log("my msg= "+ msg);
+       // $('#chat-msgbox').append("<li>me: "+msg+"</li>");
+        client_socket.emit('chat message', msg);
+
     }
     return false;
 });
@@ -17,7 +28,7 @@ $('.xo').on('click', function(e){
 
     $(this).addClass(role+'Move');
     client_socket.emit( role +' move', data );
-})
+});
 
 $('#start-stop-btn').on('click', function(e){
     if($('#start-stop-btn').text() === 'Stop'){
@@ -50,4 +61,6 @@ $('form#setupForm input[type=radio]').on('click', function(e){
 
 var reset_board = function(){
     $('.xo i').attr('class', '');
-}
+};
+
+

@@ -75,7 +75,7 @@ server_io.on('connection', function(socket){
     });
 
     socket.on('chat message', function(msg){
-        console.log('message: ' + msg);
+        console.log('message from client: ' + msg);
         server_io.emit('chat message', msg);
     });
 

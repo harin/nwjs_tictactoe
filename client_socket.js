@@ -2,6 +2,7 @@ var role;
 var ip;
 var port;
 var client_socket;
+var opponentName;
 
 /*$(document).ready(function(){
   console.log("Welcome Message!!");
@@ -56,20 +57,25 @@ $('form#setupForm').submit(function(){
     client_socket.on('serverName', function(name){
         console.log("got server name="+name);
         console.log("my role is "+ role);
+        opponentName = name;
+
         if (role === 'client'){
             //set opponent name
             $('#opponentName').html(name);
-            $('#opponentScore').html(0);    
+            $('#opponentScore').html(0); 
+   
         }
     }); 
 
     client_socket.on('clientName', function(name){
         console.log("got client name="+name);
         console.log("my role is "+role);
+        opponentName = name;
         if (role === 'server'){
             //set opponent name
             $('#opponentName').html(name);
             $('#opponentScore').html(0); 
+
         }
     });
 
@@ -106,8 +112,17 @@ $('form#setupForm').submit(function(){
   */
 
     console.log("client socket = " + client_socket);
+    
     client_socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text(msg));
+        console.log("message from server: "+ msg);
+        $('#chat-msgbox').append("<li>"+msg+"</li>");     
+  
+        // if(role==="client"){
+        //     $('#chat-msgbox').append("<li>"+opponentName+": "+msg+"</li>");     
+        // }else{
+        //     $('#chat-msgbox').append("<li>"+name+": "+msg+"</li>");     
+        // }
+        
     }); 
 
     /*
