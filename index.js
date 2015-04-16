@@ -34,7 +34,7 @@ $('.xo').on('click', function(e){
     console.log('role now: '+role+' lastTurn: '+data.lastTurn);
     if (role === data.lastTurn)
     {
-        alert("can't Move now");
+        alert("waiting for other player to move");
     }
     else
     {
@@ -81,7 +81,16 @@ $('form#setupForm input[type=radio]').on('click', function(e){
 
 var reset_board = function(){
     $('.xo i').attr('class', '');
-    data.lastTurn = "";
+    // data.lastTurn = "";
+    var randomVal = Math.random()*10;
+    if(randomVal<5){
+        lastTurn='server';
+    }
+    else{
+        lastTurn='client';
+    }
+    console.log("not start= "+ lastTurn);
+    alert(lastTurn+"player will not start");
 };
 
 
