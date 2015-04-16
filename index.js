@@ -91,6 +91,23 @@ $('form#setupForm').submit(function(){
       $('#chatbox-title').html('Chatbox ('+noConnections+')');
     });
 
+    client_socket.on('serverScore', function(serverScore){
+      console.log("serverScore="+serverScore);
+      $('#serverScore').html(serverScore);
+    });
+
+    client_socket.on('clientScore', function(clientScore){
+      console.log("clientScore="+clientScore);
+      $('#clientScore').html(clientScore);
+    });
+
+    client_socket.on('serverName', function(serverName) {
+      $('#serverName').html(serverName);
+    });
+
+    client_socket.on('clientName', function(clientName) {
+      $('#clientName').html(clientName);
+    });
     /*
   Chat
   */
@@ -153,6 +170,7 @@ $('.xo').on('click', function(e){
     var data = {
         move: [row,col]
     }
+
     $(this).addClass(role+'Move');
     client_socket.emit( role +' move', data );
 })

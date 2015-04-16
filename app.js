@@ -37,11 +37,15 @@ server_io.on('connection', function(socket){
     console.log('a user connected');
     alert("Welcome to the game!");
     server_io.emit('serverName', serverName);
+
+    //Initialize numeric values in client
     server_io.emit('noConnections', ++noConnections);
+    server_io.emit('serverScore', serverScore);
+    server_io.emit('clientScore', clientScore);
 
     if(noConnections == 2) {
       //ready to start game
-      var starter = Math.round(Math.random):
+      var starter = Math.round(Math.random());
       if (starter === 1 ){
         // let server start
         server_io.emit('turn', 'server');
@@ -111,7 +115,11 @@ server_io.on('connection', function(socket){
 
 });
 
-
+// input:
+//      pos = the position of the move to be updated
+//      value = the value to be put into the board (1 = server, -1 = client)
+//      board = the reference to the board to be updated
+// output = boolean / wether the board still needs to be updated
 var updateBoard = function(pos, value, board){
     var sum;
     var ret = true;
@@ -165,19 +173,30 @@ var updateBoard = function(pos, value, board){
 }
 
 var restart = function(){
-    board = [[ 0 , 0 , 0 ],
+  resetBoard();
+  serverScore = 0;
+  clientScore = 0;
+}
+
+var resetBoard = function(){
+      board = [[ 0 , 0 , 0 ],
              [ 0 , 0 , 0 ],
-             [ 0 , 0 , 0 ]]
+             [ 0 , 0 , 0 ]];
 }
 
 var isComplete = function(value, max){
     if ( value == max ) {
+        server_io.emit('serverScore', ++serverScore);
         server_io.emit('gameover', { winner: "server" });
-        restart();
+        console.log("server score=" + serverScore);
+        resetBoard();
         return true;
     } else if ( value == -max ) {
+        server_io.emit('clientScore', ++clientScore);
         server_io.emit('gameover', { winner: "client" });
-        restart();
+        console.log("client score=" + clientScore);
+
+        resetBoard();
         return true;
     }
     return false;
