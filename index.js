@@ -33,7 +33,7 @@ $('.xo').on('click', function(e){
 $('#start-stop-btn').on('click', function(e){
     if($('#start-stop-btn').text() === 'Stop'){
     $('#start-stop-btn').html('Start');
-    http.close();
+    server_io.close();
     }
 });
 
