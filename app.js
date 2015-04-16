@@ -44,7 +44,7 @@ server_io.on('connection', function(socket){
     server_io.emit('noConnections', ++noConnections);
     server_io.emit('serverScore', serverScore);
     server_io.emit('clientScore', clientScore);
-
+    resetBoard();
     // if(noConnections == 2) {
       //ready to start game
       // var starter = Math.round(Math.random());

@@ -64,16 +64,6 @@ $('#start-stop-btn').on('click', function(e){
 
 $('button[name=restart]').on('click', function(e){
     console.log("restart pressed on "+role);
-    // var randomVal = Math.random()*10;
-    // console.log("random: "+randomVal);
-    // if(randomVal<5){
-    //     lastTurn='server';
-    //     starter = 'client';
-    // }
-    // else{
-    //     lastTurn='client';
-    //     starter= 'server';
-    // }
     if( role === 'server') {
         console.log("client_socket="+client_socket);
         client_socket.emit('restart', '');
@@ -95,19 +85,6 @@ $('#role').on('change', function(e){
 
 var reset_board = function(){
     $('.xo i').attr('class', '');
-    // data.lastTurn = "";
-    // var randomVal = Math.random()*10;
-    // // var starter;
-    // if(randomVal<5){
-    //     lastTurn='server';
-    //     starter = 'client';
-    // }
-    // else{
-    //     lastTurn='client';
-    //     starter= 'server';
-    // }
-    // console.log("starter when reset board: "+ starter);
-    // alert(starter+" will start first");
 };
 
 

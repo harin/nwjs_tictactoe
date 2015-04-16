@@ -3,11 +3,7 @@ var ip;
 var port;
 var client_socket;
 
-/*$(document).ready(function(){
-  console.log("Welcome Message!!");
-    alert("Welcome!!");
 
-  });*/
 $('form#setupForm').submit(function(){
     name = $('#name').val();
     role = $('#role').val();
@@ -53,6 +49,7 @@ $('form#setupForm').submit(function(){
 
         }
     }
+
 
     //sockets stuff
     client_socket.on('serverName', function(name){
@@ -134,7 +131,7 @@ $('form#setupForm').submit(function(){
         var selector = "#row"+move[0]+" #col"+move[1]+" i";
         console.log("updating: " + selector +" by " + mover);
 
-        if ( mover === "server" ) {
+        if ( mover === starter ) {
             $(selector).addClass('fa fa-times fa-5x');
         } else {
             $(selector).addClass('fa fa-circle-o fa-5x');
