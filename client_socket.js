@@ -2,7 +2,6 @@ var role;
 var ip;
 var port;
 var client_socket;
-var opponentName;
 
 /*$(document).ready(function(){
   console.log("Welcome Message!!");
@@ -11,7 +10,7 @@ var opponentName;
   });*/
 $('form#setupForm').submit(function(){
     name = $('#name').val();
-    role = $('input[name=role]:checked', '#setupForm').val();
+    role = $('#role').val();
     ip = $('#ipAddress').val();
     port = $('#port').val();
     $('#playerName').html(name);
@@ -46,10 +45,12 @@ $('form#setupForm').submit(function(){
     if(client_socket) {
         if( role === "server"){
             //Change Start button to Stop
-            $('form#setupForm button').html('Stop');
+            $('#start-stop-btn').html('Stop');
+            
         } else {
             //Change connect button to Disconnect
-            $('form#setupForm button').html('Disconnect');
+            $('#start-stop-btn').html('Disconnect');
+
         }
     }
 
@@ -57,7 +58,6 @@ $('form#setupForm').submit(function(){
     client_socket.on('serverName', function(name){
         console.log("got server name="+name);
         console.log("my role is "+ role);
-        opponentName = name;
 
         if (role === 'client'){
             //set opponent name
@@ -70,7 +70,6 @@ $('form#setupForm').submit(function(){
     client_socket.on('clientName', function(name){
         console.log("got client name="+name);
         console.log("my role is "+role);
-        opponentName = name;
         if (role === 'server'){
             //set opponent name
             $('#opponentName').html(name);
@@ -115,13 +114,9 @@ $('form#setupForm').submit(function(){
     
     client_socket.on('chat message', function(msg){
         console.log("message from server: "+ msg);
-        //$('#chat-msgbox').append("<li>"+msg+"</li>");     
-  
-        // if(role==="client"){
-            $('#chat-msgbox').append("<li>"+msg.name+": "+msg.text+"</li>");     
-        // }else{
-        //     $('#chat-msgbox').append("<li>"+name+": "+msg+"</li>");     
-        // }
+        
+        $('#chat-msgbox').append("<li>"+msg.name+": "+msg.text+"</li>");     
+        
         
     }); 
 

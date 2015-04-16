@@ -8,16 +8,17 @@ $('#send').on('click', function(){
     console.log("click send");
 
     if (client_socket) {
-        console.log("submitting chat");
+        //console.log("submitting chat");
         var msg={};
         msg.name = name;
-        msg.text = $('#m').val();
-        console.log("my msg= "+ msg);
-       // $('#chat-msgbox').append("<li>me: "+msg+"</li>");
-       client_socket.emit('chat message', msg);
-
-   }
-   return false;
+        
+        if($('#m').val()){
+            msg.text = $('#m').val();   
+            client_socket.emit('chat message', msg);
+            $('#m').val('');
+        }
+        return false;
+    }
 });
 
 $('.xo').on('click', function(e){
@@ -56,6 +57,7 @@ $('#start-stop-btn').on('click', function(e){
             });
         }
     }
+   
 });
 
 $('button[name=restart]').on('click', function(e){
@@ -68,8 +70,8 @@ $('button[name=restart]').on('click', function(e){
     }
 });
 
-$('form#setupForm input[type=radio]').on('click', function(e){
-    var role = $('input[name=role]:checked', '#setupForm').val();
+$('#role').on('change', function(e){
+    var role = $('#role').val();
     if( role === "server"){
         $('form#setupForm button').html('Start');
         $('button[name=restart]').html('Restart');
