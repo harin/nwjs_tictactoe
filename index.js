@@ -26,7 +26,6 @@ $('#start-stop-btn').on('click', function(e){
     }
 });
 
-
 $('button[name=restart]').on('click', function(e){
     console.log("restart pressed on "+role);
     if( role === 'server') {

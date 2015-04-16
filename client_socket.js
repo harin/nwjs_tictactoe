@@ -95,11 +95,11 @@ $('form#setupForm').submit(function(){
     });
 
     client_socket.on('serverName', function(serverName) {
-      $('#serverName').html(serverName);
+      $('#serverScoreLabel').html(serverName);
     });
 
     client_socket.on('clientName', function(clientName) {
-      $('#clientName').html(clientName);
+      $('#clientScoreLabel').html(clientName);
     });
     /*
   Chat
