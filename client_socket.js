@@ -20,7 +20,7 @@ $('form#setupForm').submit(function(){
 
     if (role === "server"){
         //is server
-        alert("I'm " +name) ;
+        alert("I'm server: " +name) ;
         //if not running -> start listening
 
 
@@ -34,7 +34,7 @@ $('form#setupForm').submit(function(){
         // client_socket = io('http://localhost:3000');
     } else {
         //is client
-        alert("I'm " +name) ;
+        alert("I'm server: " +name) ;
         if (!client_socket){
             //If doesn't exist, create a new one and connect
             client_socket = io('http://' + ip + ':' + port );
@@ -43,6 +43,7 @@ $('form#setupForm').submit(function(){
         client_socket.emit('clientName', name);
     }
 
+    console.log("hihi client: "+ client_socket);
     if(client_socket) {
         if( role === "server"){
             //Change Start button to Stop

@@ -12,7 +12,7 @@ $('#send').on('click', function(){
         msg.name = name;
         msg.text = $('#m').val();
         console.log("my msg= "+ msg);
-       // $('#chat-msgbox').append("<li>me: "+msg+"</li>");
+        // $('#chat-msgbox').append("<li>me: "+msg+"</li>");
         client_socket.emit('chat message', msg);
 
     }
@@ -34,15 +34,19 @@ $('.xo').on('click', function(e){
 
 $('#start-stop-btn').on('click', function(e){
     if($('#start-stop-btn').text() === 'Stop'){
-    $('#start-stop-btn').html('Start');
-    server_io.close();
+        $('#start-stop-btn').html('Start');
+        if(client_socket){
+            client_socket.disconnect();
+            server_io.close();
+            console.log("this is server: "+server_io);
+        }
     }
 });
 
 $('button[name=restart]').on('click', function(e){
     console.log("restart pressed on "+role);
     if( role === 'server') {
-        console.log("client_socket="+client_socket);
+        console.log("client_socket= "+client_socket);
         client_socket.emit('restart', '');
     } else {
         client_socket.emit('resetBoard','');
