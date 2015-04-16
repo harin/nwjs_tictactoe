@@ -43,7 +43,6 @@ $('form#setupForm').submit(function(){
         client_socket.emit('clientName', name);
     }
 
-    console.log("hihi client: "+ client_socket);
     if(client_socket) {
         if( role === "server"){
             //Change Start button to Stop
@@ -54,6 +53,10 @@ $('form#setupForm').submit(function(){
         }
     }
 
+    client_socket.on('closingSever', function(){
+        reset_board();
+    });
+    
     //sockets stuff
     client_socket.on('serverName', function(name){
         console.log("got server name="+name);
@@ -147,7 +150,7 @@ $('form#setupForm').submit(function(){
   Gameover
   */
     client_socket.on('gameover', function(data){
-        alert(data.winner + " won!");
+        alert(data.winner + " won!\n" + data.msg);
         reset_board();
     });
 

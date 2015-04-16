@@ -34,11 +34,16 @@ $('.xo').on('click', function(e){
 
 $('#start-stop-btn').on('click', function(e){
     if($('#start-stop-btn').text() === 'Stop'){
+        e.preventDefault();
         $('#start-stop-btn').html('Start');
-        if(client_socket){
-            client_socket.disconnect();
+        if (role === 'server'){
+            server_io.emit('closingServer');
             server_io.close();
-            console.log("this is server: "+server_io);
+            client_socket.destroy();
+            /*console.log("trying to close connection");
+            http.close(function(){
+                console.log("Stopped listening");
+            });*/
         }
     }
 });

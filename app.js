@@ -44,24 +44,24 @@ server_io.on('connection', function(socket){
     server_io.emit('clientScore', clientScore);
 
     if(noConnections == 2) {
-      //ready to start game
-      var starter = Math.round(Math.random());
-      if (starter === 1 ){
-        // let server start
-        server_io.emit('turn', 'server');
-      } else {
-        // let client start
-        server_io.emit('turn', 'client');
-      }
+        //ready to start game
+        var starter = Math.round(Math.random());
+        if (starter === 1 ){
+            // let server start
+            server_io.emit('turn', 'server');
+        } else {
+            // let client start
+            server_io.emit('turn', 'client');
+        }
     } else {
-      server_io.emit('turn', 'unknown');
+        server_io.emit('turn', 'unknown');
     }
 
     socket.on('disconnect', function(){
         console.log('user disconnected');
         server_io.emit('noConnections', --noConnections);
     });
-
+    
     socket.on('serverName', function(data){
         console.log('serverName='+data);
         serverName = data;
@@ -181,11 +181,11 @@ var updateBoard = function(pos, value, board){
 }
 
 var restart = function(){
-  resetBoard();
-  serverScore = 0;
-  clientScore = 0;
-  server_io.emit('serverScore', serverScore);
-  server_io.emit('clientScore', clientScore);
+    resetBoard();
+    serverScore = 0;
+    clientScore = 0;
+    server_io.emit('serverScore', serverScore);
+    server_io.emit('clientScore', clientScore);
 }
 
 var resetBoard = function(){
@@ -198,13 +198,23 @@ var resetBoard = function(){
 var isComplete = function(value, max){
     if ( value == max ) {
         server_io.emit('serverScore', ++serverScore);
-        server_io.emit('gameover', { winner: "server" });
+        server_io.emit('gameover', 
+                       { 
+            winner: serverName,
+            msg: "" + serverName +" : " + serverScore + " | " +clientName +" : " + clientScore
+        }
+                      );
         console.log("server score=" + serverScore);
         resetBoard();
         return true;
     } else if ( value == -max ) {
         server_io.emit('clientScore', ++clientScore);
-        server_io.emit('gameover', { winner: "client" });
+        server_io.emit('gameover', 
+                       { 
+            winner: clientName,
+            msg: "" + serverName +" : " + serverScore + " | " +clientName + " : " + clientScore
+        }
+                      );
         console.log("client score=" + clientScore);
 
         resetBoard();
