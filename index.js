@@ -34,8 +34,14 @@ $('.xo').on('click', function(e){
 
 $('#start-stop-btn').on('click', function(e){
     if($('#start-stop-btn').text() === 'Stop'){
-    $('#start-stop-btn').html('Start');
-    http.close();
+        e.preventDefault();
+        $('#start-stop-btn').html('Start');
+        if (role === 'server'){
+            console.log("trying to close connection");
+            http.close(function(){
+                console.log("Stopped listening");
+            });
+        }
     }
 });
 
