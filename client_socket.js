@@ -146,7 +146,7 @@ $('form#setupForm').submit(function(){
   Gameover
   */
     client_socket.on('gameover', function(data){
-        alert(data.winner + " won!");
+        alert(data.winner + " won!\n" + data.msg);
         reset_board();
     });
 

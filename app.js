@@ -198,13 +198,23 @@ var resetBoard = function(){
 var isComplete = function(value, max){
     if ( value == max ) {
         server_io.emit('serverScore', ++serverScore);
-        server_io.emit('gameover', { winner: "server" });
+        server_io.emit('gameover', 
+            { 
+                winner: serverName,
+                msg: "" + serverName +" : " + serverScore + " | " +clientName +" : " + clientScore
+            }
+        );
         console.log("server score=" + serverScore);
         resetBoard();
         return true;
     } else if ( value == -max ) {
         server_io.emit('clientScore', ++clientScore);
-        server_io.emit('gameover', { winner: "client" });
+                server_io.emit('gameover', 
+            { 
+                winner: clientName,
+                msg: "" + serverName +" : " + serverScore + " | " +clientName + " : " + clientScore
+            }
+        );
         console.log("client score=" + clientScore);
 
         resetBoard();
