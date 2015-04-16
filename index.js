@@ -30,6 +30,7 @@ $('#start-stop-btn').on('click', function(e){
 $('button[name=restart]').on('click', function(e){
     console.log("restart pressed on "+role);
     if( role === 'server') {
+        console.log("client_socket="+client_socket);
         client_socket.emit('restart', '');
     } else {
         client_socket.emit('resetBoard','');
