@@ -155,7 +155,7 @@ $('form#setupForm').submit(function(){
     });
 
     /* Get Turn*/
-    client_socket.on("turn", function (e) {
+    client_socket.on('lastTurn', function (e) {
         console.log("Last turn =" + e);
         lastTurn = e;
     });

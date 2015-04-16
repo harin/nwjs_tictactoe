@@ -30,15 +30,17 @@ $('.xo').on('click', function(e){
     }
 
     $(this).addClass(role+'Move');
-    client_socket.emit( role +' move', data );
-    if (role == lastTurn)
+    data.lastTurn=lastTurn;
+    console.log('role now: '+role+' lastTurn: '+data.lastTurn);
+    if (role === data.lastTurn)
     {
-        alert("can't Move");
+        alert("can't Move now");
     }
     else
     {
-        data.turn = role;
-        $(this).addClass(role + 'Move');
+        //  client_socket.emit( role +' move', data );
+        // // data.lastTurn = role;
+        // $(this).addClass(role + 'Move');
         client_socket.emit(role + ' move', data);
     }
 });
@@ -79,6 +81,7 @@ $('form#setupForm input[type=radio]').on('click', function(e){
 
 var reset_board = function(){
     $('.xo i').attr('class', '');
+    data.lastTurn = "";
 };
 
 
