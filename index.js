@@ -1,3 +1,4 @@
+var lastTurn;
 
 /*
 jQuery stuff*/
@@ -15,6 +16,7 @@ $('#send').on('click', function(){
         // $('#chat-msgbox').append("<li>me: "+msg+"</li>");
         client_socket.emit('chat message', msg);
 
+
     }
     return false;
 });
@@ -29,23 +31,42 @@ $('.xo').on('click', function(e){
     }
 
     $(this).addClass(role+'Move');
-    client_socket.emit( role +' move', data );
+    data.lastTurn=lastTurn;
+    console.log('role now: '+role+' lastTurn: '+data.lastTurn);
+    if (role === data.lastTurn)
+    {
+        alert("can't Move now");
+    }
+    else
+    {
+        //  client_socket.emit( role +' move', data );
+        // // data.lastTurn = role;
+        // $(this).addClass(role + 'Move');
+        client_socket.emit(role + ' move', data);
+    }
 });
 
 $('#start-stop-btn').on('click', function(e){
     if($('#start-stop-btn').text() === 'Stop'){
         e.preventDefault();
         $('#start-stop-btn').html('Start');
-        if (role === 'server'){
-            server_io.emit('closingServer');
-            server_io.close();
-            client_socket.destroy();
-            /*console.log("trying to close connection");
-            http.close(function(){
-                console.log("Stopped listening");
-            });*/
-        }
-    }
+        server_io.close();
+        client_socket.destroy();
+        client_socket = undefined;
+        $('#chatbox-title').html('Chatbox');
+        //server_io = undefined;
+    }else if($('#start-stop-btn').text() === 'Disconnect'){
+        e.preventDefault();
+        $('#start-stop-btn').html('Connect');
+        client_socket.destroy();
+        client_socket = undefined;
+        $('#chatbox-title').html('Chatbox');
+    }else if($('#start-stop-btn').text() === 'Start'){
+        $('#start-stop-btn').html('Stop');
+        //server_io = require('socket.io')(http);
+    }else if($('#start-stop-btn').text() === 'Connect'){
+        $('#start-stop-btn').html('Disconnect');
+    };
 });
 
 $('button[name=restart]').on('click', function(e){
@@ -71,6 +92,5 @@ $('form#setupForm input[type=radio]').on('click', function(e){
 
 var reset_board = function(){
     $('.xo i').attr('class', '');
+    data.lastTurn = "";
 };
-
-

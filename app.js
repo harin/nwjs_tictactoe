@@ -2,7 +2,7 @@
 
 var app = require('express')();
 var http = require('http').Server(app);
-var server_io = require('socket.io')(http);
+var server_io= require('socket.io')(http);
 
 $(document).ready(function(){
     console.log("Welcome Message!!");
@@ -24,6 +24,7 @@ var board = [[ 0 , 0 , 0 ],
 
 var serverName = "";
 var clientName = "";
+// var lastTurn;
 var noConnections = 0;
 var serverScore = 0;
 var clientScore = 0;
@@ -35,7 +36,6 @@ var clientScore = 0;
 
 server_io.on('connection', function(socket){
     console.log('a user connected');
-    alert("Welcome to the game!");
     server_io.emit('serverName', serverName);
 
     //Initialize numeric values in client
@@ -43,25 +43,25 @@ server_io.on('connection', function(socket){
     server_io.emit('serverScore', serverScore);
     server_io.emit('clientScore', clientScore);
 
-    if(noConnections == 2) {
-        //ready to start game
-        var starter = Math.round(Math.random());
-        if (starter === 1 ){
-            // let server start
-            server_io.emit('turn', 'server');
-        } else {
-            // let client start
-            server_io.emit('turn', 'client');
-        }
-    } else {
-        server_io.emit('turn', 'unknown');
-    }
+    // if(noConnections == 2) {
+    //ready to start game
+    // var starter = Math.round(Math.random());
+    //   if (starter === 1 ){
+    //     // let server start
+    //     server_io.emit('lastTurn', 'server');
+    //   } else {
+    //     // let client start
+    //     server_io.emit('lastTurn', 'client');
+    //   }
+    // } else {
+    //   server_io.emit('lastTurn', 'unknown');
+    // }
 
     socket.on('disconnect', function(){
         console.log('user disconnected');
         server_io.emit('noConnections', --noConnections);
     });
-    
+
     socket.on('serverName', function(data){
         console.log('serverName='+data);
         serverName = data;
@@ -82,16 +82,28 @@ server_io.on('connection', function(socket){
     socket.on('server move', function(data){
         var move = data.move;
         console.log('server move : '+move);
-        var shouldUpdate = updateBoard(move,1,board);
-        console.log('should update =' + shouldUpdate);
-        if( shouldUpdate){
-            console.log('send board update');
-            var updateData = {
-                move: move,
-                by: 'server'
+        console.log('first round: '+data.lastTurn);
+        if(data.lastTurn === 'server'){
+            alert("can't Move");
+            console.log('why kao this one');
+        }
+        // else if(data.lastTurn === undefined){
+
+        // }   
+        else{
+            var shouldUpdate = updateBoard(move,1,board);
+            console.log('should update =' + shouldUpdate);
+            if( shouldUpdate){
+                console.log('send board update');
+                var updateData = {
+                    move: move,
+                    by: 'server'
+                }
+                data.lastTurn = 'server';
+                console.log('server move CAN MOVE');
+                server_io.emit('board update', updateData);
+                server_io.emit('lastTurn', 'server');
             }
-            server_io.emit('board update', updateData);
-            server_io.emit('turn', 'client');
         }
     });
 
@@ -107,13 +119,18 @@ server_io.on('connection', function(socket){
     socket.on('client move', function(data){
         var move = data.move;
         console.log('client move : ' + move);
-        if( updateBoard(move, -1, board)){
-            var updateData = {
-                move: move,
-                by: 'client'
+        console.log('last turn clientmove: '+data.lastTurn);
+        if(data.lastTurn!=='client'){
+            if( updateBoard(move, -1, board)){
+                var updateData = {
+                    move: move,
+                    by: 'client'
+                }
+                server_io.emit('board update', updateData);
+                data.lastTurn = 'client';
+                server_io.emit('lastTurn', 'client');
+                console.log('last turn line 128 client');
             }
-            server_io.emit('board update', updateData);
-            server_io.emit('turn', 'server');
         }
     });
 
@@ -122,6 +139,16 @@ server_io.on('connection', function(socket){
     });
 
 });
+var socketlist = [];
+server_io.sockets.on('connection', function(client_socket) {
+    socketlist.push(client_socket);
+    client_socket.emit('socket_is_connected','You are connected!');
+    client_socket.on('close', function () {
+        console.log('socket closed');
+        socketlist.splice(socketlist.indexOf(client_socket), 1);
+    });
+});
+
 
 // input:
 //      pos = the position of the move to be updated
