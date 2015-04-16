@@ -1,4 +1,5 @@
 var lastTurn;
+var starter;
 
 /*
 jQuery stuff*/
@@ -8,15 +9,14 @@ $('#send').on('click', function(){
     console.log("click send");
 
     if (client_socket) {
-        console.log("submitting chat");
+        //console.log("submitting chat");
         var msg={};
         msg.name = name;
+
         msg.text = $('#m').val();
         console.log("my msg= "+ msg);
         // $('#chat-msgbox').append("<li>me: "+msg+"</li>");
         client_socket.emit('chat message', msg);
-
-
     }
     return false;
 });
@@ -27,7 +27,8 @@ $('.xo').on('click', function(e){
     console.log(row +','+col);
 
     var data = {
-        move: [row,col]
+        move: [row,col],
+        starter: starter
     }
 
     $(this).addClass(role+'Move');
@@ -35,7 +36,7 @@ $('.xo').on('click', function(e){
     console.log('role now: '+role+' lastTurn: '+data.lastTurn);
     if (role === data.lastTurn)
     {
-        alert("can't Move now");
+        alert("waiting for other player to move");
     }
     else
     {
@@ -79,8 +80,8 @@ $('button[name=restart]').on('click', function(e){
     }
 });
 
-$('form#setupForm input[type=radio]').on('click', function(e){
-    var role = $('input[name=role]:checked', '#setupForm').val();
+$('#role').on('change', function(e){
+    var role = $('#role').val();
     if( role === "server"){
         $('form#setupForm button').html('Start');
         $('button[name=restart]').html('Restart');
@@ -92,5 +93,6 @@ $('form#setupForm input[type=radio]').on('click', function(e){
 
 var reset_board = function(){
     $('.xo i').attr('class', '');
-    data.lastTurn = "";
 };
+
+

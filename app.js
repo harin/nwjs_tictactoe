@@ -2,11 +2,22 @@
 
 var app = require('express')();
 var http = require('http').Server(app);
-var server_io= require('socket.io')(http);
+var server_io = require('socket.io')(http);
+var firstTurn = {};
 
 $(document).ready(function(){
-    console.log("Welcome Message!!");
     alert("Welcome!!");
+    var randomVal = Math.random()*10;
+
+    if(randomVal < 5){
+        firstTurn.first = 'client';
+        firstTurn.second = 'server';
+    }
+    else{
+        firstTurn.first= 'server';
+        firstTurn.second= 'client'
+    }
+    console.log("first round= "+firstTurn);
 });
 
 app.get('/', function(req, res){
@@ -43,6 +54,9 @@ server_io.on('connection', function(socket){
     server_io.emit('serverScore', serverScore);
     server_io.emit('clientScore', clientScore);
 
+    server_io.emit('first turn', firstTurn);
+
+    // resetBoard();
     // if(noConnections == 2) {
     //ready to start game
     // var starter = Math.round(Math.random());
@@ -109,6 +123,7 @@ server_io.on('connection', function(socket){
 
     socket.on('restart', function(data){
         console.log('received restart request');
+        // console.log(data.starter+' will get to start');
         restart();
     });
 
@@ -134,9 +149,9 @@ server_io.on('connection', function(socket){
         }
     });
 
-    socket.on('restart', function(){
-        restart();
-    });
+    // socket.on('restart', function(){
+    //     restart();
+    // });
 
 });
 var socketlist = [];
@@ -219,7 +234,18 @@ var resetBoard = function(){
     board = [[ 0 , 0 , 0 ],
              [ 0 , 0 , 0 ],
              [ 0 , 0 , 0 ]];
-    server_io.emit('resetBoard', '');
+    var randomVal = Math.random()*10;
+    console.log("random: "+randomVal);
+    var data={};
+    if(randomVal<5){
+        data.lastTurn='server';
+        data.starter = 'client';
+    }
+    else{
+        data.lastTurn='client';
+        data.starter= 'server';
+    }
+    server_io.emit('resetBoard', data);
 }
 
 var isComplete = function(value, max){
