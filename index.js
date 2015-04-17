@@ -52,6 +52,7 @@ $('#start-stop-btn').on('click', function(e){
         e.preventDefault();
         $('#start-stop-btn').html('Start');
         server_io.close();
+        socketlist = [];
         client_socket.destroy();
         client_socket = undefined;
         $('#chatbox-title').html('Chatbox');
