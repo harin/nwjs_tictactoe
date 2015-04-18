@@ -51,11 +51,12 @@ $('#start-stop-btn').on('click', function(e){
     if($('#start-stop-btn').text() === 'Stop'){
         e.preventDefault();
         $('#start-stop-btn').html('Start');
+        server_io.emit('closing_server');
         server_io.close();
         socketlist = [];
-        client_socket.destroy();
-        client_socket = undefined;
-        $('#chatbox-title').html('Chatbox');
+        // client_socket.destroy();
+        // client_socket = undefined;
+        // $('#chatbox-title').html('Chatbox');
         //server_io = undefined;
     }else if($('#start-stop-btn').text() === 'Disconnect'){
         e.preventDefault();

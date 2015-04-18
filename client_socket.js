@@ -196,8 +196,45 @@ $('form#setupForm').submit(function(){
 
         }
     });
+
+    /* Disconnect */
+    client_socket.on('connect_error', function(e){
+        console.log("Connect_error Event");
+        disconnect();
+
+    });
+
+    client_socket.on('connect_timeout', function(e){
+        console.log("Connect_timeout Event");
+        disconnect();
+    });
+
+    client_socket.on('reconnect_failed', function(e){
+        console.log("reconnect_failed Event");
+        disconnect();
+    });
+
+    client_socket.on('reconnect_error', function(e){
+        console.log("reconnect_error Event");
+        disconnect();
+    });
+
+    client_socket.on('closing_server', function(){
+        console.log("closing_server Event");
+        disconnect();
+    });
+
     return false;
+
+
 });
+
+var disconnect = function(){
+    $('#start-stop-btn').html('Connect');
+    client_socket.destroy();
+    client_socket = undefined;
+    $('#chatbox-title').html('Chatbox');
+}
 
 var createClientSocket = function(n,r,i,p){
     if (r === "server"){
