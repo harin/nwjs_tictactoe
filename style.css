@@ -1,103 +1,111 @@
 /*
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }*/
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font: 13px Helvetica, Arial; }
+form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+#messages { list-style-type: none; margin: 0; padding: 0; }
+#messages li { padding: 5px 10px; }
+#messages li:nth-child(odd) { background: #eee; }*/
+
 body{
     background: url(public/tri.svg);
+    background-repeat: no-repeat;
+    margin: auto;
+    padding: 0px;
+    font-size: 16px;
     font-family: Lato,Helvetica,Arial,sans-serif;
+    min-width: 1050px;
 }
-
 *{
     margin: 0px;
     padding: 0px;
-    font-size: 20px;
     /*border: 1px solid black;*/
 }
 
+#main-display{
+    width: 68%;
+    margin: 0px;
+    min-width: 600px;
+}
+
+/*------------------------------- Header ----------------------------------------*/
+
 header{
     display: fixed;
-    width: calc(100% - 250px);
+    padding: 0px;
+    margin: 0px;
 }
 header div{
-    display: inline-block;
-    height: 100%;
+    display: block;
+    padding: 20px;
 }
-header form {
-    display: inline-block;
-    margin:0;
-    padding: 0;
+header form input{
+    max-width: 200px;
 }
-header form input {
+.form-group select{
+    max-width: 100px;
 }
 header button{
-    height: 100%;
     background: white;
     padding: 0.5em;
-    border: 0;
     width: 100px;
+}
+#restart-btn{
+    margin-left: 20px;
 }
 #port{
     width: 80px;
 }
 
-/* Main Section - the tictactoe board */
+/*---------------- Main Section - the tictactoe board -------------------------- */
+
 main{
     position:absolute;
-    width: calc(100% - 250px);
-    height: calc(100% - 250px);
     display: flex;
+    width: inherit;
 }
 #tictactoe{
     margin: auto;
     vertical-align: middle;
-    width: 300px;
     height: 300px;
-}
-
-tr {
-    padding: 1px;
-    height: 100px;
-}
-td{
+    width: 300px;
     text-align: center;
-}
+} 
 .xo {
     border: 3px solid rgba(255,255,255,0);
     opacity: .90;
     background-clip: content-box;
     background: #fff;
     margin: 3px;
-    width: 100px;
     height: 100px;
+    width: 100px;
 }
-
-fa {
-    width:100%;
-    height:100%;   
-}
-
-
 .xo:hover {
     background: #eee;
     cursor: pointer;
 }
-
- .serverMove {
+.serverMove {
     font-family: "FontAwesome";
     content: "\f00d";
- }
+}
+.clientMove {
+    /*background: green;*/
+}
 
- .clientMove {
- 	/*background: green;*/
- }
 
+/*------------------------- Chat window -----------------------------------------*/
 
-/* Chat window */
+#chat-sidecart{
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 32%;
+    min-width: 250px;
+    background: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
 #chatbox-title{
     position: absolute;
     top: 0px;
@@ -107,34 +115,20 @@ fa {
     height: 2em;
     /*border: 2px solid #eee;*/
     font-size: 20px;
+    font-weight: bold;
     text-align: center;
     background-color: #2ecc71;
     color: white;
     font-family: Lato,Helvetica,Arial,sans-serif;
     padding-top: 10px;
-
-}
-
-    
-
-
-#chat-sidecart {
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 250px;
-    background: white;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 #chat-msgbox{
     list-style-type: none;
     padding: 0px;
     font-family: Lato,Helvetica,Arial,sans-serif;
-    margin-top: 2em;
+    margin-top: 3em;
 
 }
-
 .chat-msg{
     overflow-y: auto;
     overflow-x: auto;
@@ -142,7 +136,6 @@ fa {
     border-bottom: 1px solid black;
     padding: 10px
 }
-
 #chat-input {
     position: absolute;
     bottom: 0px;
@@ -153,7 +146,6 @@ fa {
     height: 3em;
     border-top: 2px solid #eee;
 }
-
 #chat-input input {
     position: absolute;
     bottom:0;
@@ -164,50 +156,41 @@ fa {
     border: 0;
     padding: .5em 1.5em;
 }
-
 #chat-input input:focus {
     background: #eee;
     outline: 0;
 }
-
 #chat-input button {
     position: absolute;
     padding: .5em 1.5em;
-
     color: white;
-    bottom:0px;
+    bottom: 0px;
     right: 0px;
     height: 100%;
-    width: calc(40%);
+    width: 100px;
     background: rgb(233,110,80);
-    border:0;
 }
 
-/*score board*/
+/*--------------------------------score board------------------------------------*/
 
 #scoreboard{
-
+    max-width: 150px;
 }
-
 #serverScore,#clientScore{
     font-size: 150px;
     font-family: 'lcdmono2normal', Arial, Helvetica, sans-serif;
     color: white;
+    height: 150px;
+    line-height: 150px;
 }
-
 #serverScoreLabel,#clientScoreLabel{
     font-size: 20px;
     color: white;
 
 }
-
 #serverBoard,#clientBoard{
     text-align: center;
 
-}
-
-.label{
-    font-size: 12px;
 }
 
 
