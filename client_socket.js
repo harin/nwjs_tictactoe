@@ -172,7 +172,7 @@ $('form#setupForm').submit(function(){
     /* Gameover */
     client_socket.on('gameover', function(data){
         alert("Winner: "+data.winner + "! " + data.msg);
-        reset_board();
+        // reset_board();
     });
 
     client_socket.on('error', function(msg){

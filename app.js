@@ -39,6 +39,7 @@ var clientName = "";
 var noConnections = 0;
 var serverScore = 0;
 var clientScore = 0;
+var winner = "";
 
 /**************************************************** 
                      Methods
@@ -100,24 +101,48 @@ server_io.on('connection', function(socket){
         if(data.lastTurn === 'server'){
             alert("can't Move");
             console.log('why kao this one');
-        }
-        // else if(data.lastTurn === undefined){
-
-        // }   
+        } 
         else{
             var shouldUpdate = updateBoard(move,1,board);
             console.log('should update =' + shouldUpdate);
-            if( shouldUpdate){
-                console.log('send board update');
-                var updateData = {
-                    move: move,
-                    by: 'server'
-                }
-                data.lastTurn = 'server';
-                console.log('server move CAN MOVE');
-                server_io.emit('board update', updateData);
-                server_io.emit('lastTurn', 'server');
+            
+            console.log('send board update');
+            var updateData = {
+                move: move,
+                by: 'server'
             }
+            data.lastTurn = 'server';
+            console.log('server move CAN MOVE');
+            server_io.emit('board update', updateData);
+            server_io.emit('lastTurn', 'server');
+            
+            if( !shouldUpdate ) {
+                gameOverMsg();
+                resetBoard();
+            }
+        }
+    });
+
+    socket.on('client move', function(data){
+        var move = data.move;
+        console.log('client move : ' + move);
+        console.log('last turn clientmove: '+data.lastTurn);
+        if(data.lastTurn!=='client'){
+            var shouldUpdate = updateBoard(move, -1, board)
+            var updateData = {
+                move: move,
+                by: 'client'
+            }
+            server_io.emit('board update', updateData);
+            data.lastTurn = 'client';
+            server_io.emit('lastTurn', 'client');
+            console.log('last turn line 128 client');
+
+            if( !shouldUpdate ) {
+                gameOverMsg();
+                resetBoard();
+            }
+            
         }
     });
 
@@ -129,24 +154,6 @@ server_io.on('connection', function(socket){
 
     socket.on('resetBoard', function(data){
         resetBoard();
-    });
-
-    socket.on('client move', function(data){
-        var move = data.move;
-        console.log('client move : ' + move);
-        console.log('last turn clientmove: '+data.lastTurn);
-        if(data.lastTurn!=='client'){
-            if( updateBoard(move, -1, board)){
-                var updateData = {
-                    move: move,
-                    by: 'client'
-                }
-                server_io.emit('board update', updateData);
-                data.lastTurn = 'client';
-                server_io.emit('lastTurn', 'client');
-                console.log('last turn line 128 client');
-            }
-        }
     });
 
     // socket.on('restart', function(){
@@ -269,29 +276,40 @@ var resetBoard = function(){
     server_io.emit('resetBoard', data);
 }
 
+var gameOverMsg = function(){
+    server_io.emit('gameover', 
+        { 
+                winner: winner,
+                msg: "" + serverName +" : " + serverScore + " | " +clientName +" : " + clientScore
+        }
+    );
+}
+
 var isComplete = function(value, max){
     if ( value == max ) {
         server_io.emit('serverScore', ++serverScore);
-        server_io.emit('gameover', 
-                       { 
-            winner: serverName,
-            msg: "" + serverName +" : " + serverScore + " | " +clientName +" : " + clientScore
-        }
-                      );
+        winner = serverName;
+        // server_io.emit('gameover', 
+        //     { 
+        //         winner: serverName,
+        //         msg: "" + serverName +" : " + serverScore + " | " +clientName +" : " + clientScore
+        //     }
+        // );
         console.log("server score=" + serverScore);
-        resetBoard();
+        // resetBoard();
         return true;
     } else if ( value == -max ) {
         server_io.emit('clientScore', ++clientScore);
-        server_io.emit('gameover', 
-                       { 
-            winner: clientName,
-            msg: "" + serverName +" : " + serverScore + " | " +clientName + " : " + clientScore
-        }
-                      );
+        winner = clientName;
+        // server_io.emit('gameover', 
+        //     {
+        //         winner: clientName,
+        //         msg: "" + serverName +" : " + serverScore + " | " +clientName + " : " + clientScore
+        //     }
+        // );
         console.log("client score=" + clientScore);
 
-        resetBoard();
+        // resetBoard();
         return true;
     }
     return false;
@@ -300,12 +318,13 @@ var isComplete = function(value, max){
 var isTie = function(value, max){
     if ( value == max ) {
         server_io.emit('serverScore', serverScore);
-        server_io.emit('gameover', 
-                       { 
-            winner: "Tied",
-            msg: "" + serverName +" : " + serverScore + " | " +clientName +" : " + clientScore
-        }
-                      );
+        winner = "Tied";
+        // server_io.emit('gameover', 
+        //     { 
+        //         winner: "Tied",
+        //         msg: "" + serverName +" : " + serverScore + " | " +clientName +" : " + clientScore
+        //     }
+        // );
         console.log("server score=" + serverScore);
         resetBoard();
         return true;
