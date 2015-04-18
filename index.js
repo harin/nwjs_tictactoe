@@ -96,6 +96,23 @@ $('#role').on('change', function(e){
     }
 });
 
+//change theme
+$('#change-theme-select').change(function(){
+    console.log("try to change theme");
+    if($('#change-theme-select option:selected').text() === 'bg3'){
+        console.log("get in bg3");
+        $('body').css('background', 'url(public/tri.svg)');
+    }else if($('#change-theme-select option:selected').text() === 'bg1'){
+        $('body').css('background', 'url(public/bg1.jpg)');
+    }else if($('#change-theme-select option:selected').text() === 'bg2'){
+        $('body').css('background', 'url(public/texture_cyantiles.jpg)');
+    }else if($('#change-theme-select option:selected').text() === 'bg4'){
+        $('body').css('background', 'url(public/bg4.jpg)');
+    }else if($('#change-theme-select option:selected').text() === 'bg5'){
+        $('body').css('background', 'url(public/texture_bluewood.jpg)');
+    }
+});
+
 var reset_board = function(){
     $('.xo i').attr('class', '');
 };

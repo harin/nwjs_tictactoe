@@ -36,8 +36,7 @@
                         <select id="role" class="form-control">
                             <option value="server">Server</option>
                             <option value="client">Client</option>
-                        </select>
-                        <br>        
+                        </select>        
                     </div>
 
 
@@ -46,9 +45,18 @@
                         <button class="btn btn-danger" name="restart" id="restart-btn">Reset</button>
                     </div>
                 </form>
+                <div id="setting">
+                    <label>Theme:</label><select id="change-theme-select">Theme
+                        <option id="bg1" >bg1</option>
+                        <option id="bg2" >bg2</option>
+                        <option id="bg3" selected>bg3</option>
+                        <option id="bg4" >bg4</option>
+                        <option id="bg5" >bg5</option>
+                    </select>
+                </div>
             </header>
 
-            <main>
+            <main> 
                 <div class="col-md-3" id="scoreboard">
                     <div id="serverBoard" >
                         <label id="serverScore">0</label><br>
