@@ -209,14 +209,35 @@ var updateBoard = function(pos, value, board){
     for( var i= 0; i < board.length; i++) {
         sum += board[i][i];
     }
-    if( isComplete(sum, board.length)) ret = false
+    if( isComplete(sum, board.length)){
+        ret = false; 
+    }
 
     sum = 0;
     for( var i= 0; i < board.length; i++) {
         sum += board[i][board.length - 1 - i]
     }
-    if( isComplete(sum, board.length)) ret = false
+    if( isComplete(sum, board.length)){
+        ret = false;
+    }
 
+    //check board full
+    sum = 0;
+    for(var i=0; i<board.length; i++){
+        for(var j=0; j<board.length;j++){
+            if(board[i][j]===-1 || board[i][j]===1){
+                console.log('board '+i+','+j+   'has value');
+                sum++;
+                console.log('sum: '+sum);
+            }
+        }
+    }
+    var boardsize =board.length*board.length;
+    console.log('board size: '+boardsize +' sum: '+sum);
+    if( isTie(sum, boardsize)){
+        console.log('board full');
+        ret = false;
+    }
 
     //if no winner update board
     return ret;
@@ -270,6 +291,22 @@ var isComplete = function(value, max){
                       );
         console.log("client score=" + clientScore);
 
+        resetBoard();
+        return true;
+    }
+    return false;
+}
+
+var isTie = function(value, max){
+    if ( value == max ) {
+        server_io.emit('serverScore', serverScore);
+        server_io.emit('gameover', 
+                       { 
+            winner: "Tied",
+            msg: "" + serverName +" : " + serverScore + " | " +clientName +" : " + clientScore
+        }
+                      );
+        console.log("server score=" + serverScore);
         resetBoard();
         return true;
     }
