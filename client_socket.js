@@ -40,6 +40,11 @@ $('form#setupForm').submit(function(){
 
     createClientSocket(name,role,ip,port);
 
+    //Show joining msg
+    var msg={};
+    msg.name = name;
+    console.log("IM CONNECTING= "+ msg);
+    client_socket.emit('connect message', msg);
 
     /*if(client_socket) {
         if( role === "server"){
@@ -147,9 +152,10 @@ $('form#setupForm').submit(function(){
     // console.log("client socket = " + client_socket);
 
     client_socket.on('chat message', function(msg){
-        console.log("message from server: "+ msg);        
-        $('#chat-msgbox').append("<li>"+msg.name+": "+msg.text+"</li>");     
-    }); 
+        console.log("message from server: "+ msg);
+        $('#m').val("");
+        $('#chat-msgbox').append("<li class='chat-msg'><span>"+msg.name+":</span> "+msg.text+"</li>");     
+    });
 
 
     /* Update Board */

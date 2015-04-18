@@ -48,25 +48,40 @@ $('.xo').on('click', function(e){
 });
 
 $('#start-stop-btn').on('click', function(e){
+
+    //Server Disconnect
     if($('#start-stop-btn').text() === 'Stop'){
         e.preventDefault();
         $('#start-stop-btn').html('Start');
         server_io.emit('closing_server');
         server_io.close();
         socketlist = [];
+        $('#chat-msgbox').empty();
         // client_socket.destroy();
         // client_socket = undefined;
         // $('#chatbox-title').html('Chatbox');
         //server_io = undefined;
+
+        //Server Start the game    
+    }else if($('#start-stop-btn').text() === 'Start'){
+        $('#start-stop-btn').html('Stop');
+        //server_io = require('socket.io')(http);
+
+        //Client Disconnect    
     }else if($('#start-stop-btn').text() === 'Disconnect'){
+        var msg={};
+        msg.name = name;
+        console.log("IM LEAVING= "+ msg);
+        client_socket.emit('disconnect message', msg);
+
         e.preventDefault();
         $('#start-stop-btn').html('Connect');
         client_socket.destroy();
         client_socket = undefined;
         $('#chatbox-title').html('Chatbox');
-    }else if($('#start-stop-btn').text() === 'Start'){
-        $('#start-stop-btn').html('Stop');
-        //server_io = require('socket.io')(http);
+        $('#chat-msgbox').empty();
+
+        //Client Connect to the game    
     }else if($('#start-stop-btn').text() === 'Connect'){
         $('#start-stop-btn').html('Disconnect');
     };

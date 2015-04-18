@@ -94,6 +94,15 @@ server_io.on('connection', function(socket){
         server_io.emit('chat message', msg);
     });
 
+    socket.on('disconnect message', function(msg){
+        console.log("LEAVER!!!");
+        $('#chat-msgbox').append("<li class='chat-msg'><span>"+msg.name+" has left the game</span></li>");            
+    });
+
+    socket.on('connect message', function(msg){
+        $('#chat-msgbox').append("<li class='chat-msg'><span>"+msg.name+" has joined to the game</span></li>");
+    });
+
     socket.on('server move', function(data){
         var move = data.move;
         console.log('server move : '+move);
@@ -105,7 +114,7 @@ server_io.on('connection', function(socket){
         else{
             var shouldUpdate = updateBoard(move,1,board);
             console.log('should update =' + shouldUpdate);
-            
+
             console.log('send board update');
             var updateData = {
                 move: move,
@@ -115,7 +124,7 @@ server_io.on('connection', function(socket){
             console.log('server move CAN MOVE');
             server_io.emit('board update', updateData);
             server_io.emit('lastTurn', 'server');
-            
+
             if( !shouldUpdate ) {
                 gameOverMsg();
                 resetBoard();
@@ -142,7 +151,7 @@ server_io.on('connection', function(socket){
                 gameOverMsg();
                 resetBoard();
             }
-            
+
         }
     });
 
@@ -278,11 +287,11 @@ var resetBoard = function(){
 
 var gameOverMsg = function(){
     server_io.emit('gameover', 
-        { 
-                winner: winner,
-                msg: "" + serverName +" : " + serverScore + " | " +clientName +" : " + clientScore
-        }
-    );
+                   { 
+        winner: winner,
+        msg: "" + serverName +" : " + serverScore + " | " +clientName +" : " + clientScore
+    }
+                  );
 }
 
 var isComplete = function(value, max){

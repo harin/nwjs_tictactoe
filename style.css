@@ -105,6 +105,7 @@ main{
     min-width: 250px;
     background: white;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    padding: 0px;
 }
 #chatbox-title{
     position: absolute;
@@ -124,17 +125,17 @@ main{
 }
 #chat-msgbox{
     list-style-type: none;
-    padding: 0px;
     font-family: Lato,Helvetica,Arial,sans-serif;
     margin-top: 3em;
-
 }
 .chat-msg{
-    overflow-y: auto;
-    overflow-x: auto;
-    text-decoration: none;
+    width: 100%;
+    word-break: break-all;
     border-bottom: 1px solid black;
-    padding: 10px
+    padding: 10px;
+}
+.chat-msg span{
+    font-weight: bold;
 }
 #chat-input {
     position: absolute;
