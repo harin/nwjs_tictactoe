@@ -43,7 +43,7 @@ $('form#setupForm').submit(function(){
     //Show joining msg
     var msg={};
     msg.name = name;
-    console.log("IM CONNECTING= "+ msg);
+    //console.log("IM CONNECTING= "+ msg);
     client_socket.emit('connect message', msg);
 
     /*if(client_socket) {
@@ -77,8 +77,8 @@ $('form#setupForm').submit(function(){
 
 
     client_socket.on('serverName', function(name){
-        console.log("got server name= "+name);
-        console.log("my role is "+ role);
+        //console.log("got server name= "+name);
+        //console.log("my role is "+ role);
 
         if (role === 'client'){
             //set opponent name
@@ -89,8 +89,8 @@ $('form#setupForm').submit(function(){
     }); 
 
     client_socket.on('clientName', function(name){
-        console.log("got client name= "+name);
-        console.log("my role is "+role);
+        //console.log("got client name= "+name);
+        //console.log("my role is "+role);
         if (role === 'server'){
             //set opponent name
             $('#opponentName').html(name);
@@ -130,12 +130,12 @@ $('form#setupForm').submit(function(){
     });
 
     client_socket.on('serverScore', function(serverScore){
-        console.log("serverScore="+serverScore);
+        //console.log("serverScore="+serverScore);
         $('#serverScore').html(serverScore);
     });
 
     client_socket.on('clientScore', function(clientScore){
-        console.log("clientScore="+clientScore);
+        //console.log("clientScore="+clientScore);
         $('#clientScore').html(clientScore);
     });
 
@@ -227,19 +227,28 @@ $('form#setupForm').submit(function(){
 
     client_socket.on('closing_server', function(){
         console.log("closing_server Event");
+        $('#chat-msgbox').append("<li class='chat-msg'><span>Server Closed</span></li>");     
         disconnect();
     });
-
+    
     return false;
 
 
 });
 
 var disconnect = function(){
-    $('#start-stop-btn').html('Connect');
-    client_socket.destroy();
-    client_socket = undefined;
-    $('#chatbox-title').html('Chatbox');
+    if(role === 'server'){
+        $('#start-stop-btn').html('Start');
+        client_socket.destroy();
+        client_socket = undefined;
+        $('#chatbox-title').html('Chatbox');
+        $('#chat-msgbox').empty();
+    }else{
+        $('#start-stop-btn').html('Connect');
+        client_socket.destroy();
+        client_socket = undefined;
+        $('#chatbox-title').html('Chatbox');
+    }
 }
 
 var createClientSocket = function(n,r,i,p){
@@ -247,7 +256,7 @@ var createClientSocket = function(n,r,i,p){
         //is server
         alert("I'm server: " +n) ;
         //if not running -> start listening
-
+        $('#start-stop-btn').html('Stop');
 
         http.listen( p, function(){
             console.log('listening on *:' + p);
@@ -256,10 +265,10 @@ var createClientSocket = function(n,r,i,p){
         client_socket = io('http://localhost:' + p);
         client_socket.emit('serverName', n);
 
-        // client_socket = io('http://localhost:3000');
     } else {
         //is client
         alert("I'm client: " +n) ;
+        $('#start-stop-btn').html('Disconnect');
         if (!client_socket){
             //If doesn't exist, create a new one and connect
             client_socket = io('http://' + i + ':' + p);
