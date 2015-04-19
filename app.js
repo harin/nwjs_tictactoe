@@ -56,21 +56,6 @@ server_io.on('connection', function(socket){
     server_io.emit('clientScore', clientScore);
     server_io.emit('first turn', firstTurn);
 
-    // resetBoard();
-    // if(noConnections == 2) {
-    //ready to start game
-    // var starter = Math.round(Math.random());
-    //   if (starter === 1 ){
-    //     // let server start
-    //     server_io.emit('lastTurn', 'server');
-    //   } else {
-    //     // let client start
-    //     server_io.emit('lastTurn', 'client');
-    //   }
-    // } else {
-    //   server_io.emit('lastTurn', 'unknown');
-    // }
-
     socket.on('disconnect', function(){
         console.log('user disconnected');
         server_io.emit('noConnections', --noConnections);
@@ -119,7 +104,9 @@ server_io.on('connection', function(socket){
                     server_io.emit('board update', updateData);
                     server_io.emit('lastTurn', 'server');
                 }
-            }else{
+            }
+
+            if(!shouldUpdate){
                 gameOverMsg();
                 resetBoard();
             }
@@ -144,7 +131,9 @@ server_io.on('connection', function(socket){
                     server_io.emit('lastTurn', 'client');
                     //console.log('last turn line 128 client');
                 }
-            }else{
+            }
+
+            if(!shouldUpdate){
                 gameOverMsg();
                 resetBoard();
             }
