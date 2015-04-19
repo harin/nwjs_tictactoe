@@ -78,7 +78,6 @@ $('#start-stop-btn').on('click', function(e){
 $('button[name=restart]').on('click', function(e){
     console.log("restart pressed on "+role);
     if( role === 'server') {
-        console.log("client_socket= "+client_socket);
         client_socket.emit('restart', '');
     } else {
         client_socket.emit('resetBoard','');
@@ -89,7 +88,7 @@ $('#role').on('change', function(e){
     var role = $('#role').val();
     if( role === "server"){
         $('form#setupForm button').html('Start');
-        $('button[name=restart]').html('Restart');
+        $('button[name=restart]').html('Restart Game');
     } else {
         $('form#setupForm button').html('Connect');
         $('button[name=restart]').html('Reset Board');
@@ -113,6 +112,7 @@ $('#change-theme-select').change(function(){
     }
 });
 
+//Clear all XO in table
 var reset_board = function(){
     $('.xo i').attr('class', '');
 };

@@ -13,51 +13,12 @@ $('form#setupForm').submit(function(){
     $('#playerScore').html(0);
 
 
-    /*  if (role === "server"){
-        //is server
-        alert("I'm server: " +name) ;
-        //if not running -> start listening
-
-
-        http.listen( port, function(){
-            console.log('listening on *:' + port);
-        });
-
-        client_socket = io('http://localhost:' + port);
-        client_socket.emit('serverName', name);
-
-        // client_socket = io('http://localhost:3000');
-    } else {
-        //is client
-        alert("I'm client: " +name) ;
-        if (!client_socket){
-            //If doesn't exist, create a new one and connect
-            client_socket = io('http://' + ip + ':' + port);
-        } 
-
-        client_socket.emit('clientName', name);
-    } */
-
     createClientSocket(name,role,ip,port);
-
     //Show joining msg
     var msg={};
     msg.name = name;
     //console.log("IM CONNECTING= "+ msg);
-    client_socket.emit('connect message', msg);
-
-    /*if(client_socket) {
-        if( role === "server"){
-            //Change Start button to Stop
-            $('#start-stop-btn').html('Stop');
-
-        } else {
-            //Change connect button to Disconnect
-            $('#start-stop-btn').html('Disconnect');
-
-        }
-    }*/
-
+    client_socket.emit('join message', msg);
 
 
     //sockets stuff
@@ -87,7 +48,6 @@ $('form#setupForm').submit(function(){
 
         }
     }); 
-
     client_socket.on('clientName', function(name){
         //console.log("got client name= "+name);
         //console.log("my role is "+role);
@@ -99,16 +59,18 @@ $('form#setupForm').submit(function(){
         }
     });
 
+
     client_socket.on('resetBoard', function(data){
         lastTurn=data.lastTurn;
         starter=data.starter;
 
         if(starter === 'server'){
             $('#serverBoard label').css("color","black");
+            $('#clientBoard label').css("color","white");
 
         }else{
             $('#clientBoard label').css("color","black");
-
+            $('#serverBoard label').css("color","white");
         }
 
         reset_board();
@@ -147,16 +109,12 @@ $('form#setupForm').submit(function(){
         $('#clientScoreLabel').html(clientName);
     });
 
-
     /* Chat */
-    // console.log("client socket = " + client_socket);
-
     client_socket.on('chat message', function(msg){
         console.log("message from server: "+ msg);
         $('#m').val("");
         $('#chat-msgbox').append("<li class='chat-msg'><span>"+msg.name+":</span> "+msg.text+"</li>");     
     });
-
 
     /* Update Board */
     client_socket.on('board update', function(data){
@@ -174,7 +132,6 @@ $('form#setupForm').submit(function(){
         }
     });
 
-
     /* Gameover */
     client_socket.on('gameover', function(data){
         alert("Winner: "+data.winner + "! " + data.msg);
@@ -184,7 +141,6 @@ $('form#setupForm').submit(function(){
     client_socket.on('error', function(msg){
         alert(msg);
     });
-
 
     /* Get Turn*/
     client_socket.on('lastTurn', function (e) {
@@ -207,7 +163,6 @@ $('form#setupForm').submit(function(){
     client_socket.on('connect_error', function(e){
         console.log("Connect_error Event");
         disconnect();
-
     });
 
     client_socket.on('connect_timeout', function(e){
@@ -230,9 +185,8 @@ $('form#setupForm').submit(function(){
         $('#chat-msgbox').append("<li class='chat-msg'><span>Server Closed</span></li>");     
         disconnect();
     });
-    
-    return false;
 
+    return false;
 
 });
 

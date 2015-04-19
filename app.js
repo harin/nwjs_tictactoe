@@ -95,11 +95,10 @@ server_io.on('connection', function(socket){
     });
 
     socket.on('disconnect message', function(msg){
-        console.log("LEAVER!!!");
         $('#chat-msgbox').append("<li class='chat-msg'><span>"+msg.name+" has left the game</span></li>");            
     });
 
-    socket.on('connect message', function(msg){
+    socket.on('join message', function(msg){
         $('#chat-msgbox').append("<li class='chat-msg'><span>"+msg.name+" has joined to the game</span></li>");
     });
 
@@ -109,7 +108,6 @@ server_io.on('connection', function(socket){
         console.log('first round: '+data.lastTurn);
         if(data.lastTurn === 'server'){
             alert("can't Move");
-            console.log('why kao this one');
         } 
         else{
             var shouldUpdate = updateBoard(move,1,board);
@@ -286,12 +284,10 @@ var resetBoard = function(){
 }
 
 var gameOverMsg = function(){
-    server_io.emit('gameover', 
-                   { 
+    server_io.emit('gameover', { 
         winner: winner,
-        msg: "" + serverName +" : " + serverScore + " | " +clientName +" : " + clientScore
-    }
-                  );
+        msg: "" + serverName +": " + serverScore + " | " +clientName +": " + clientScore
+    });
 }
 
 var isComplete = function(value, max){
