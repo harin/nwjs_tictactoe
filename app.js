@@ -54,7 +54,6 @@ server_io.on('connection', function(socket){
     server_io.emit('noConnections', ++noConnections);
     server_io.emit('serverScore', serverScore);
     server_io.emit('clientScore', clientScore);
-
     server_io.emit('first turn', firstTurn);
 
     // resetBoard();
@@ -105,25 +104,22 @@ server_io.on('connection', function(socket){
     socket.on('server move', function(data){
         var move = data.move;
         console.log('server move : '+move);
-        console.log('first round: '+data.lastTurn);
-        if(data.lastTurn === 'server'){
-            alert("can't Move");
-        } 
-        else{
-            var shouldUpdate = updateBoard(move,1,board);
-            console.log('should update =' + shouldUpdate);
-
-            console.log('send board update');
-            var updateData = {
-                move: move,
-                by: 'server'
-            }
-            data.lastTurn = 'server';
-            console.log('server move CAN MOVE');
-            server_io.emit('board update', updateData);
-            server_io.emit('lastTurn', 'server');
-
-            if( !shouldUpdate ) {
+        //console.log('first round: '+data.lastTurn);
+        if(data.lastTurn!=='server'){
+            var shouldUpdate = updateBoard(board);
+            var shouldSlot = checkSlot(move, 1);
+            if(shouldUpdate){
+                if(shouldSlot){
+                    var updateData = {
+                        move: move,
+                        by: 'server'
+                    }
+                    data.lastTurn = 'server';
+                    //console.log('server move CAN MOVE');
+                    server_io.emit('board update', updateData);
+                    server_io.emit('lastTurn', 'server');
+                }
+            }else{
                 gameOverMsg();
                 resetBoard();
             }
@@ -133,19 +129,22 @@ server_io.on('connection', function(socket){
     socket.on('client move', function(data){
         var move = data.move;
         console.log('client move : ' + move);
-        console.log('last turn clientmove: '+data.lastTurn);
+        //console.log('last turn clientmove: '+data.lastTurn);
         if(data.lastTurn!=='client'){
-            var shouldUpdate = updateBoard(move, -1, board)
-            var updateData = {
-                move: move,
-                by: 'client'
-            }
-            server_io.emit('board update', updateData);
-            data.lastTurn = 'client';
-            server_io.emit('lastTurn', 'client');
-            console.log('last turn line 128 client');
-
-            if( !shouldUpdate ) {
+            var shouldUpdate = updateBoard(board);
+            var shouldSlot = checkSlot(move, -1);
+            if(shouldUpdate){
+                if(shouldSlot){
+                    var updateData = {
+                        move: move,
+                        by: 'client'
+                    }
+                    server_io.emit('board update', updateData);
+                    data.lastTurn = 'client';
+                    server_io.emit('lastTurn', 'client');
+                    //console.log('last turn line 128 client');
+                }
+            }else{
                 gameOverMsg();
                 resetBoard();
             }
@@ -183,19 +182,25 @@ server_io.sockets.on('connection', function(client_socket) {
 //      pos = the position of the move to be updated
 //      value = the value to be put into the board (1 = server, -1 = client)
 //      board = the reference to the board to be updated
-// output = boolean / wether the board still needs to be updated
-var updateBoard = function(pos, value, board){
-    var sum;
-    var ret = true;
+//      output = boolean / wether the board still needs to be updated
+var checkSlot = function(pos, value){
     var x = pos[0];
     var y = pos[1];
+    var slot = true;
     if ( board[x][y] === 0 ){
         board[x][y] = value;
     } else {
         server_io.emit('error', "That slot is taken!");
+        slot = false;    
     }
-    //Check if winner
+    return slot;
+}
 
+var updateBoard = function(board){
+    var sum;
+    var ret = true;
+
+    //Check if winner
     //Check all row
     board.forEach(function(row, index, array){
         sum = 0;
@@ -240,14 +245,14 @@ var updateBoard = function(pos, value, board){
     for(var i=0; i<board.length; i++){
         for(var j=0; j<board.length;j++){
             if(board[i][j]===-1 || board[i][j]===1){
-                console.log('board '+i+','+j+   'has value');
+                console.log('board '+i+','+j+   ' has value');
                 sum++;
-                console.log('sum: '+sum);
+                //console.log('sum: '+sum);
             }
         }
     }
     var boardsize =board.length*board.length;
-    console.log('board size: '+boardsize +' sum: '+sum);
+    //console.log('board size: '+boardsize +' sum: '+sum);
     if( isTie(sum, boardsize)){
         console.log('board full');
         ret = false;

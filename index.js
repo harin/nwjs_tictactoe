@@ -24,7 +24,7 @@ $('#send').on('click', function(){
 $('.xo').on('click', function(e){
     var row = $(this).parent().data('row');
     var col = $(this).data('col');
-    console.log(row +','+col);
+    //console.log(row +','+col);
 
     var data = {
         move: [row,col],

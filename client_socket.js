@@ -28,10 +28,11 @@ $('form#setupForm').submit(function(){
         //console.log("firstStarter= "+ starter);
         if(starter === 'server'){
             $('#serverBoard label').css("color","black");
+            $('#clientBoard label').css("color","white");
 
         }else{
             $('#clientBoard label').css("color","black");
-
+            $('#serverBoard label').css("color","white");
         }
         // alert(starter+ " plays first.");
     });
