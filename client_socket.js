@@ -211,6 +211,7 @@ var createClientSocket = function(n,r,i,p){
         alert("I'm server: " +n) ;
         //if not running -> start listening
         $('#start-stop-btn').html('Stop');
+        $('form#setupForm input').prop('disabled',true);
 
         http.listen( p, function(){
             console.log('listening on *:' + p);
@@ -223,6 +224,7 @@ var createClientSocket = function(n,r,i,p){
         //is client
         alert("I'm client: " +n) ;
         $('#start-stop-btn').html('Disconnect');
+        $('form#setupForm input').prop('disabled',true);
         if (!client_socket){
             //If doesn't exist, create a new one and connect
             client_socket = io('http://' + i + ':' + p);

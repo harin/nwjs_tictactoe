@@ -58,6 +58,8 @@ $('#start-stop-btn').on('click', function(e){
         socketlist = [];
         $('#chatbox-title').html('Chatbox');
         $('#chat-msgbox').empty();
+        $('form#setupForm input').prop('disabled',false);
+        reset_board();
 
     }//Client Disconnect    
     else if($('#start-stop-btn').text() === 'Disconnect'){
@@ -72,6 +74,8 @@ $('#start-stop-btn').on('click', function(e){
         client_socket = undefined;
         $('#chatbox-title').html('Chatbox');
         $('#chat-msgbox').empty();
+        $('form#setupForm input').prop('disabled',false);
+        reset_board();
     }
 });
 
