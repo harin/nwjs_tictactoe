@@ -88,56 +88,70 @@ server_io.on('connection', function(socket){
 
     socket.on('server move', function(data){
         var move = data.move;
-        console.log('server move : '+move);
+        //console.log('server move : '+move);
         //console.log('first round: '+data.lastTurn);
+        console.log("Board(after server click xo): "+ board.toString());
         if(data.lastTurn!=='server'){
             var shouldUpdate = updateBoard(board);
             var shouldSlot = checkSlot(move, 1);
             if(shouldUpdate){
+                // console.log("Board(after shouldUpdate): "+ board.toString());
                 if(shouldSlot){
+                    // console.log("Board(after shouldSlot): "+ board.toString());
                     var updateData = {
                         move: move,
                         by: 'server'
                     }
+
                     data.lastTurn = 'server';
-                    //console.log('server move CAN MOVE');
                     server_io.emit('board update', updateData);
                     server_io.emit('lastTurn', 'server');
-                }
-            }
-
-            if(!shouldUpdate){
-                gameOverMsg();
-                resetBoard();
-            }
-        }
+                    //console.log('server move CAN MOVE');
+                    if(updateBoard(board)===false){
+                        gameOverMsg();
+                        resetBoard();
+                    }
+                   
+                    
+                 }
+            
+            }}
     });
 
     socket.on('client move', function(data){
         var move = data.move;
-        console.log('client move : ' + move);
+        //console.log('client move : ' + move);
         //console.log('last turn clientmove: '+data.lastTurn);
+        console.log("Board(after client click xo): "+ board.toString());
         if(data.lastTurn!=='client'){
             var shouldUpdate = updateBoard(board);
             var shouldSlot = checkSlot(move, -1);
             if(shouldUpdate){
+              // console.log("Board(after shouldUpdate): "+ board.toString());
                 if(shouldSlot){
+                    // console.log("Board(after shouldSlot): "+ board.toString());
+
                     var updateData = {
                         move: move,
                         by: 'client'
                     }
+
+                   
                     server_io.emit('board update', updateData);
                     data.lastTurn = 'client';
                     server_io.emit('lastTurn', 'client');
+                    
+                    if(updateBoard(board)===false){
+                    console.log("should not update");
+                    gameOverMsg();
+                    resetBoard(); 
+                    }
+
+                    
                     //console.log('last turn line 128 client');
                 }
             }
-
-            if(!shouldUpdate){
-                gameOverMsg();
-                resetBoard();
-            }
-
+               
         }
     });
 
@@ -171,11 +185,13 @@ server_io.sockets.on('connection', function(client_socket) {
 //      pos = the position of the move to be updated
 //      value = the value to be put into the board (1 = server, -1 = client)
 //      board = the reference to the board to be updated
-//      output = boolean / wether the board still needs to be updated
+//      output = boolean / whether the board still needs to be updated
 var checkSlot = function(pos, value){
+    console.log("--entering checkslot--");
     var x = pos[0];
     var y = pos[1];
     var slot = true;
+    console.log('x: '+x+", y: "+y);
     if ( board[x][y] === 0 ){
         board[x][y] = value;
     } else {
@@ -234,7 +250,7 @@ var updateBoard = function(board){
     for(var i=0; i<board.length; i++){
         for(var j=0; j<board.length;j++){
             if(board[i][j]===-1 || board[i][j]===1){
-                console.log('board '+i+','+j+   ' has value');
+                //console.log('board '+i+','+j+   ' has value');
                 sum++;
                 //console.log('sum: '+sum);
             }

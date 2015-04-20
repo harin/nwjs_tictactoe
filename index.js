@@ -33,7 +33,7 @@ $('.xo').on('click', function(e){
 
     $(this).addClass(role+'Move');
     data.lastTurn=lastTurn;
-    console.log('role now: '+role+' lastTurn: '+data.lastTurn);
+   // console.log('role now: '+role+' lastTurn: '+data.lastTurn);
     if (role === data.lastTurn)
     {
         alert("waiting for other player to move");

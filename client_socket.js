@@ -124,7 +124,7 @@ $('form#setupForm').submit(function(){
         var mover = data.by;
 
         var selector = "#row"+move[0]+" #col"+move[1]+" i";
-        console.log("updating: " + selector +" by " + mover);
+        //console.log("updating: " + selector +" by " + mover);
 
         if ( mover === starter ) {
             $(selector).addClass('fa fa-times fa-5x');
@@ -145,7 +145,7 @@ $('form#setupForm').submit(function(){
 
     /* Get Turn*/
     client_socket.on('lastTurn', function (e) {
-        console.log("Last turn =" + e);
+       // console.log("Last turn =" + e);
         lastTurn = e;
 
         if(lastTurn !== 'server'){
