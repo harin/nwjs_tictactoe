@@ -3,8 +3,6 @@ var starter;
 
 /*
 jQuery stuff*/
-
-
 $('#send').on('click', function(){
     console.log("click send");
 
@@ -55,7 +53,7 @@ $('#start-stop-btn').on('click', function(e){
         e.preventDefault();
         server_io.emit('closing_server');
         server_io.close();
-        match_socket.emit('isServer', false);
+        match_socket.emit('userdata', {isServer:false});
         socketlist = [];
         $('#chatbox-title').html('Chatbox');
         $('#chat-msgbox').empty();
@@ -130,6 +128,7 @@ $('#onlineuserlist-btn').on('click', function(){
     $('#chat-msgbox').addClass('invisible');
     $('#onlineuserlist').removeClass('invisible');
 });
+
 
 //Clear all XO in table
 var reset_board = function(){

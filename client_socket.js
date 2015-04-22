@@ -232,7 +232,12 @@ var createClientSocket = function(n,r,i,p){
         });
 
         client_socket = io('http://localhost:' + p);
-        match_socket.emit('isServer', true);
+        match_socket.emit('userdata',{
+            name: name,
+            ip: realip,
+            port: p,
+            isServer: true
+        })
         console.log("Match socket = " + match_socket);
         client_socket.emit('serverName', n);
 
@@ -253,7 +258,8 @@ $(document).ready(function(){
     if (name) $('#name').val(name);
 
     var port = $('#port').val();
-    var query = 'ip='+realip+'&name='+name+'&port='+port+'&isServer=false';
+    // var query = 'ip='+realip+'&name='+name+'&port='+port+'&isServer=false';
+    var query = 'name='+name+'&isServer=false';
     match_socket = io('http://localhost:8765' , {query: query});
     //Match socket
 
@@ -263,9 +269,22 @@ $(document).ready(function(){
         
         //clear user list ui
         $('#onlineuserlist').empty();
-        userList.forEach(function(user){
-            var toAppend = '<li>'+user.name+' | ' + user.ip+ ' | '+ user.port +'</li>';
+        userList.forEach(function(user, index){
+            var toAppend = '<li data-index='+ index +'>'+user.name+' | ' + user.ip+ ' | '+ user.port ;
+            if( user.isServer === true) toAppend +='<button class="selectRoom">Select</button>';
+            toAppend += '</li>';
             $('#onlineuserlist').append(toAppend);
+
+            $('button.selectRoom').on('click', function(event){
+
+                var li = $(event.target).closest('li');
+                var index = li.data('index');
+                console.log('index = ' + index);
+
+                var user = userList[index];
+                $('#ipAddress').val(user.ip);
+                $('#port').val(user.port);
+            });
         });
     });
 
