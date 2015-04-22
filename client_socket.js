@@ -2,6 +2,8 @@ var role;
 var ip;
 var port;
 var client_socket;
+var match_socket;
+var userList;
 
 
 $('form#setupForm').submit(function(){
@@ -46,7 +48,6 @@ $('form#setupForm').submit(function(){
             //set opponent name
             $('#opponentName').html(name);
             $('#opponentScore').html(0); 
-
         }
     }); 
     client_socket.on('clientName', function(name){
@@ -108,6 +109,12 @@ $('form#setupForm').submit(function(){
 
     client_socket.on('clientName', function(clientName) {
         $('#clientScoreLabel').html(clientName);
+    });
+
+    client_socket.on('ip', function(ipFromSv) {
+        ip = ipFromSv
+        console.log('Client: My IP is ' + ip);
+        $('#ipAddress').val(ip);
     });
 
     /* Chat */
@@ -187,6 +194,14 @@ $('form#setupForm').submit(function(){
         disconnect();
     });
 
+    //Match socket
+
+    match_socket.on('userList', function(ul){
+        console.log('Client: Updating User list');
+        userList = ul;
+        console.log(ul);
+    })
+
     return false;
 
 });
@@ -219,6 +234,9 @@ var createClientSocket = function(n,r,i,p){
         });
 
         client_socket = io('http://localhost:' + p);
+        var query = 'ip='+realip+'&name='+name+'&port='+p;
+        match_socket = io('http://localhost:8765' , {query: query});
+        console.log("Match socket = " + match_socket);
         client_socket.emit('serverName', n);
 
     } else {

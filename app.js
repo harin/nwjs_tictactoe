@@ -1,9 +1,49 @@
 "use strict";
+//client
+
+
+/**************************************************** 
+                     Properties
+*****************************************************/
+
+
+var board = [[ 0 , 0 , 0 ],
+             [ 0 , 0 , 0 ],
+             [ 0 , 0 , 0 ]]
+
+var serverName = "";
+var clientName = "";
+// var lastTurn;
+var noConnections = 0;
+var serverScore = 0;
+var clientScore = 0;
+var winner = "";
+var realip;
+
+/**************************************************** 
+                     Node js
+*****************************************************/
 
 var app = require('express')();
 var http = require('http').Server(app);
 var server_io = require('socket.io')(http);
 var firstTurn = {};
+
+var os = require('os');
+
+var interfaces = os.networkInterfaces();
+var addresses = [];
+for (var k in interfaces) {
+    for (var k2 in interfaces[k]) {
+        var address = interfaces[k][k2];
+        if (address.family === 'IPv4' && !address.internal) {
+            addresses.push(address.address);
+        }
+    }
+}
+
+realip = addresses
+console.log("my ip = "+ addresses);
 
 $(document).ready(function(){
     alert("Welcome!!");
@@ -24,22 +64,7 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
 
-/**************************************************** 
-                     Properties
-*****************************************************/
 
-
-var board = [[ 0 , 0 , 0 ],
-             [ 0 , 0 , 0 ],
-             [ 0 , 0 , 0 ]]
-
-var serverName = "";
-var clientName = "";
-// var lastTurn;
-var noConnections = 0;
-var serverScore = 0;
-var clientScore = 0;
-var winner = "";
 
 /**************************************************** 
                      Methods
@@ -55,6 +80,7 @@ server_io.on('connection', function(socket){
     server_io.emit('serverScore', serverScore);
     server_io.emit('clientScore', clientScore);
     server_io.emit('first turn', firstTurn);
+    socket.emit('ip', realip);
 
     socket.on('disconnect', function(){
         console.log('user disconnected');
