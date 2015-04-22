@@ -55,7 +55,7 @@ $('#start-stop-btn').on('click', function(e){
         e.preventDefault();
         server_io.emit('closing_server');
         server_io.close();
-        match_socket.destroy();
+        match_socket.emit('isServer', false);
         socketlist = [];
         $('#chatbox-title').html('Chatbox');
         $('#chat-msgbox').empty();
@@ -118,17 +118,17 @@ $('#change-theme-select').change(function(){
 });
 
 $('#chatbox-title').on('click', function(){
-    $('#serverlist-btn').removeClass('selected');
+    $('#onlineuserlist-btn').removeClass('selected');
     $('#chatbox-title').addClass('selected');
     $('#chat-msgbox').removeClass('invisible');
-    $('#serverlist').addClass('invisible');
+    $('#onlineuserlist').addClass('invisible');
     
 });
-$('#serverlist-btn').on('click', function(){
+$('#onlineuserlist-btn').on('click', function(){
     $('#chatbox-title').removeClass('selected');
-    $('#serverlist-btn').addClass('selected');
+    $('#onlineuserlist-btn').addClass('selected');
     $('#chat-msgbox').addClass('invisible');
-    $('#serverlist').removeClass('invisible');
+    $('#onlineuserlist').removeClass('invisible');
 });
 
 //Clear all XO in table

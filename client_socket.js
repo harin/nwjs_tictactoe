@@ -6,6 +6,8 @@ var match_socket;
 var userList;
 
 
+
+
 $('form#setupForm').submit(function(){
     name = $('#name').val();
     role = $('#role').val();
@@ -194,13 +196,7 @@ $('form#setupForm').submit(function(){
         disconnect();
     });
 
-    //Match socket
 
-    match_socket.on('userList', function(ul){
-        console.log('Client: Updating User list');
-        userList = ul;
-        console.log(ul);
-    })
 
     return false;
 
@@ -234,8 +230,7 @@ var createClientSocket = function(n,r,i,p){
         });
 
         client_socket = io('http://localhost:' + p);
-        var query = 'ip='+realip+'&name='+name+'&port='+p;
-        match_socket = io('http://localhost:8765' , {query: query});
+        match_socket.emit('isServer', true);
         console.log("Match socket = " + match_socket);
         client_socket.emit('serverName', n);
 
@@ -251,3 +246,25 @@ var createClientSocket = function(n,r,i,p){
         } 
     }
 };
+
+$(document).ready(function(){
+    var port = $('#port').val();
+    var query = 'ip='+realip+'&name='+name+'&port='+port+'&isServer=false';
+    match_socket = io('http://localhost:8765' , {query: query});
+    //Match socket
+
+    match_socket.on('userList', function(ul){
+        console.log('Client: Updating User list');
+        userList = ul;
+        
+        //clear user list ui
+        $('#onlineuserlist').empty();
+        userList.forEach(function(user){
+            var toAppend = '<li>'+user.name+' | ' + user.ip+ ' | '+ user.port +'</li>';
+            $('#onlineuserlist').append(toAppend);
+        });
+    });
+
+});
+
+

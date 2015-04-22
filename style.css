@@ -145,7 +145,7 @@ main{
     height: 100%;
     border: none;
 }
-#serverlist-btn.selected{
+#onlineuserlist-btn.selected{
     background: #2ecc71;
     width: 100%;
     height: 100%;
@@ -163,7 +163,7 @@ main{
     position: absolute;
     display: block;
 }
-#serverlist{
+#onlineuserlist{
     list-style-type: none;
     font-family: Lato,Helvetica,Arial,sans-serif;
     margin-top: 0.5em;
@@ -172,7 +172,7 @@ main{
     width: 100%;
     display: block;
 }
-#chat-msg.invisible, #serverlist.invisible{
+#chat-msg.invisible, #onlineuserlist.invisible{
     display: none;
 }
 
