@@ -116,6 +116,20 @@ $('#change-theme-select').change(function(){
     }
 });
 
+$('#chatbox-title').on('click', function(){
+    $('#serverlist-btn').removeClass('selected');
+    $('#chatbox-title').addClass('selected');
+    $('#chat-msgbox').removeClass('invisible');
+    $('#serverlist').addClass('invisible');
+    
+});
+$('#serverlist-btn').on('click', function(){
+    $('#chatbox-title').removeClass('selected');
+    $('#serverlist-btn').addClass('selected');
+    $('#chat-msgbox').addClass('invisible');
+    $('#serverlist').removeClass('invisible');
+});
+
 //Clear all XO in table
 var reset_board = function(){
     $('.xo i').attr('class', '');

@@ -116,27 +116,66 @@ main{
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     padding: 0px;
 }
-#chatbox-title{
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    width: 100%;
-    margin: 0px;
-    height: 2em;
-    /*border: 2px solid #eee;*/
+#switch-tab{
+    margin: auto;
+    padding: 2px;
+}
+#switch-tab li{
+    display: inline-block;
+    width: 49%;
     font-size: 20px;
     font-weight: bold;
     text-align: center;
-    background-color: #2ecc71;
+    background-color: lightgrey;
     color: white;
     font-family: Lato,Helvetica,Arial,sans-serif;
-    padding-top: 10px;
+    height: 2em;
+    margin: 0;
+    border-radius: 5px;
 }
+#switch-tab button{
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: none;
+}
+#chatbox-title.selected{
+    background: #2ecc71;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+#serverlist-btn.selected{
+    background: #2ecc71;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+/*#switch-tab li.selected{
+    background: #2ecc71;
+}*/
 #chat-msgbox{
     list-style-type: none;
     font-family: Lato,Helvetica,Arial,sans-serif;
-    margin-top: 3em;
+    margin-top: 0.5em;
+    height: 85%;
+    width: 100%;
+    position: absolute;
+    display: block;
 }
+#serverlist{
+    list-style-type: none;
+    font-family: Lato,Helvetica,Arial,sans-serif;
+    margin-top: 0.5em;
+    height: 85%;
+    position: absolute;
+    width: 100%;
+    display: block;
+}
+#chat-msg.invisible, #serverlist.invisible{
+    display: none;
+}
+
 .chat-msg{
     width: 100%;
     word-break: break-all;

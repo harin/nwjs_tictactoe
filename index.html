@@ -46,7 +46,7 @@
                     </div>
                 </form>
                 <div id="setting">
-                    <label>Theme:</label><select id="change-theme-select">Theme
+                    <label>Theme:</label><select id="change-theme-select">
                         <option id="bg1" >bg1</option>
                         <option id="bg2" >bg2</option>
                         <option id="bg3" selected>bg3</option>
@@ -93,9 +93,19 @@
 
         <!--CHAT!-->
         <div class="col-md-3" id="chat-sidecart">
-            <p id="chatbox-title">Chat</p>
-            <ul id="chat-msgbox">
+            <ul id="switch-tab">
+                <li><button id="chatbox-title" class="selected">Chat</button></li>
+                <li><button id="serverlist-btn">Server List</button></li>
             </ul>
+            
+            <ul id="chat-msgbox">
+                <li>Tan: dfdfafdsafsdf</li>
+            </ul>
+            
+            <ul id="serverlist" class="invisible">
+                <li>Server 1 online</li>
+            </ul>
+            
             <form action="" id="chat-input">
                 <input id="m" autocomplete="off" type="text" />
                 <button id="send">Send</button>
