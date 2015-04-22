@@ -2,7 +2,7 @@
   "name": "node-webkit-chat",
   "version": "0.0.2",
   "description": "node-webkit-express is a very small nodejs app that runs expressjs in node-webkit.",
-  "main": "index.html",
+  "main": "login.html",
   "single-instance": false,
   "window": {
     "width": 300,

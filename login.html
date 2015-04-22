@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TicTacToe?</title>
+	<script src="public/js/jquery-1.11.2.min.js"></script>
+
+</head>
+<body>
+	<form class="form-inline" action="" id="setupForm">
+
+        <div class="form-group">
+            <label for="name">What is you name ?</label>
+            <input class="form-control" type="text" id="name" />        
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Join</button>
+        </div>
+
+    </form>
+</body>
+
+<script type="text/javascript">
+	$('form').submit(function(event){
+		event.preventDefault();
+		name = $('#name').val()
+
+		if( name == ''){
+			alert('Please choose a nickname');
+		} else {
+			window.location = "./index.html";
+		}
+	});
+</script>
+</html>

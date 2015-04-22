@@ -9,6 +9,8 @@ var userList;
 
 
 $('form#setupForm').submit(function(){
+
+
     name = $('#name').val();
     role = $('#role').val();
     ip = $('#ipAddress').val();
@@ -248,6 +250,8 @@ var createClientSocket = function(n,r,i,p){
 };
 
 $(document).ready(function(){
+    if (name) $('#name').val(name);
+
     var port = $('#port').val();
     var query = 'ip='+realip+'&name='+name+'&port='+port+'&isServer=false';
     match_socket = io('http://localhost:8765' , {query: query});
