@@ -4,7 +4,7 @@ var port;
 var client_socket;
 var match_socket;
 var userList;
-
+var matchServerIp = "localhost";
 
 
 
@@ -260,7 +260,7 @@ $(document).ready(function(){
     var port = $('#port').val();
     // var query = 'ip='+realip+'&name='+name+'&port='+port+'&isServer=false';
     var query = 'name='+name+'&isServer=false';
-    match_socket = io('http://localhost:8765' , {query: query});
+    match_socket = io('http://'+matchServerIp':8765' , {query: query});
     //Match socket
 
     match_socket.on('userList', function(ul){
