@@ -31,7 +31,7 @@ $('.xo').on('click', function(e){
 
     $(this).addClass(role+'Move');
     data.lastTurn=lastTurn;
-   // console.log('role now: '+role+' lastTurn: '+data.lastTurn);
+    // console.log('role now: '+role+' lastTurn: '+data.lastTurn);
     if (role === data.lastTurn)
     {
         alert("waiting for other player to move");
@@ -112,6 +112,8 @@ $('#change-theme-select').change(function(){
         $('body').css('background', 'url(public/bg4.jpg)');
     }else if($('#change-theme-select option:selected').text() === 'bg5'){
         $('body').css('background', 'url(public/texture_bluewood.jpg)');
+    }else if($('#change-theme-select option:selected').text() === 'Methus'){
+        $('body').css('background', 'url(public/methus.jpg)');
     }
 });
 
@@ -120,7 +122,7 @@ $('#chatbox-title').on('click', function(){
     $('#chatbox-title').addClass('selected');
     $('#chat-msgbox').removeClass('invisible');
     $('#onlineuserlist').addClass('invisible');
-    
+
 });
 $('#onlineuserlist-btn').on('click', function(){
     $('#chatbox-title').removeClass('selected');

@@ -75,8 +75,24 @@ server_io.on('connection', function(socket){
     console.log('a user connected');
     server_io.emit('serverName', serverName);
 
+
+
     //Initialize numeric values in client
     server_io.emit('noConnections', ++noConnections);
+
+    if (noConnections == 2){
+        match_socket.emit('gameStarted', true);
+    }
+
+    if( noConnections < 2){
+        match_socket.emit('gameStarted', false);
+    }
+
+    match_socket.on('restart', function(){
+        console.log('restarting game');
+        restart();
+    });
+
     server_io.emit('serverScore', serverScore);
     server_io.emit('clientScore', clientScore);
     server_io.emit('first turn', firstTurn);

@@ -4,7 +4,7 @@ var port;
 var client_socket;
 var match_socket;
 var userList;
-
+var matchServerIp = "localhost";
 
 
 
@@ -156,7 +156,7 @@ $('form#setupForm').submit(function(){
 
     /* Get Turn*/
     client_socket.on('lastTurn', function (e) {
-       // console.log("Last turn =" + e);
+        // console.log("Last turn =" + e);
         lastTurn = e;
 
         if(lastTurn !== 'server'){
@@ -260,19 +260,20 @@ $(document).ready(function(){
     var port = $('#port').val();
     // var query = 'ip='+realip+'&name='+name+'&port='+port+'&isServer=false';
     var query = 'name='+name+'&isServer=false';
-    match_socket = io('http://192.168.10.42:8765' , {query: query});
+    match_socket = io('http://'+matchServerIp+':8765' , {query: query});
     //Match socket
 
     match_socket.on('userList', function(ul){
         console.log('Client: Updating User list');
         userList = ul;
-        
+
         //clear user list ui
         $('#onlineuserlist').empty();
         userList.forEach(function(user, index){
             var toAppend = '<li data-index='+ index +'><span>'+user.name+'</span> | ' + user.ip+ ' | '+ user.port ;
-            if( user.isServer === true) toAppend +='<button class="btn btn-warning">Join</button>';
+            if( user.isServer === true) toAppend +='<button class="btn btn-warning selectRoom">Join</button>';
             toAppend += '</li>';
+            // if( user.gameStarted === true) toAppend += '<button class="restartGame">Restart</button>';
             $('#onlineuserlist').append(toAppend);
 
             $('button.selectRoom').on('click', function(event){
