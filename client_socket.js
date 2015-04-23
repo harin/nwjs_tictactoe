@@ -273,6 +273,7 @@ $(document).ready(function(){
             var toAppend = '<li data-index='+ index +'>'+user.name+' | ' + user.ip+ ' | '+ user.port ;
             if( user.isServer === true) toAppend +='<button class="selectRoom">Select</button>';
             toAppend += '</li>';
+            // if( user.gameStarted === true) toAppend += '<button class="restartGame">Restart</button>';
             $('#onlineuserlist').append(toAppend);
 
             $('button.selectRoom').on('click', function(event){
