@@ -49,7 +49,7 @@ header form input{
 header button{
     background: white;
     padding: 0.5em;
-    width: 100px;
+    width: 120px;
 }
 #restart-btn{
     margin-left: 20px;
@@ -151,9 +151,6 @@ main{
     height: 100%;
     border: none;
 }
-/*#switch-tab li.selected{
-    background: #2ecc71;
-}*/
 #chat-msgbox{
     list-style-type: none;
     font-family: Lato,Helvetica,Arial,sans-serif;
@@ -162,20 +159,21 @@ main{
     width: 100%;
     position: absolute;
     display: block;
+    overflow-y: auto;
 }
 #onlineuserlist{
     list-style-type: none;
     font-family: Lato,Helvetica,Arial,sans-serif;
     margin-top: 0.5em;
     height: 85%;
-    position: absolute;
     width: 100%;
+    position: absolute;
     display: block;
+    overflow-y: auto;
 }
 #chat-msg.invisible, #onlineuserlist.invisible{
     display: none;
 }
-
 .chat-msg{
     width: 100%;
     word-break: break-all;
@@ -242,7 +240,32 @@ main{
 
 }
 
+/*--------------------------------Login Page------------------------------------*/
 
+#login-form{
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    width: 100%;
+}
+#login-form input{
+    width: 300px;
+    height: 40px;
+    padding: 3px;
+    font-size: 20px;
+    text-align: center;
+}
+#login-form button{
+    width: 100px;
+    font-size: 20px;
+}
 
+/*--------------------------------Server List------------------------------------*/
 
-
+/*
+.selectRoom{
+    padding: 5px;
+    width: 60px;
+    border-radius: 5px;
+}
+*/

@@ -260,7 +260,7 @@ $(document).ready(function(){
     var port = $('#port').val();
     // var query = 'ip='+realip+'&name='+name+'&port='+port+'&isServer=false';
     var query = 'name='+name+'&isServer=false';
-    match_socket = io('http://localhost:8765' , {query: query});
+    match_socket = io('http://192.168.10.42:8765' , {query: query});
     //Match socket
 
     match_socket.on('userList', function(ul){
@@ -270,8 +270,8 @@ $(document).ready(function(){
         //clear user list ui
         $('#onlineuserlist').empty();
         userList.forEach(function(user, index){
-            var toAppend = '<li data-index='+ index +'>'+user.name+' | ' + user.ip+ ' | '+ user.port ;
-            if( user.isServer === true) toAppend +='<button class="selectRoom">Select</button>';
+            var toAppend = '<li data-index='+ index +'><span>'+user.name+'</span> | ' + user.ip+ ' | '+ user.port ;
+            if( user.isServer === true) toAppend +='<button class="btn btn-warning">Join</button>';
             toAppend += '</li>';
             $('#onlineuserlist').append(toAppend);
 

@@ -42,7 +42,7 @@ for (var k in interfaces) {
     }
 }
 
-realip = addresses
+realip = addresses[0];
 console.log("my ip = "+ addresses);
 
 $(document).ready(function(){

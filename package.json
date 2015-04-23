@@ -3,10 +3,11 @@
   "version": "0.0.2",
   "description": "node-webkit-express is a very small nodejs app that runs expressjs in node-webkit.",
   "main": "login.html",
-  "single-instance": false,
+  "single-instance":
+    false,
   "window": {
-    "width": 300,
-    "height": 300,
+    "width": 900,
+    "height": 700,
     "title": "m-cms edit",
     "toolbar": true
   },
