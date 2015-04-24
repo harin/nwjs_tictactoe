@@ -120,6 +120,10 @@ server_io.on('connection', function(socket){
         server_io.emit('chat message', msg);
     });
 
+    socket.on('quake', function(event){
+        server_io.emit('quake');
+    });
+
     socket.on('disconnect message', function(msg){
         $('#chat-msgbox').append("<li class='chat-msg'><span>"+msg.name+" has left the game</span></li>");            
     });

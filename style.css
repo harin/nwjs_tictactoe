@@ -278,3 +278,9 @@ main{
     background: white;
     padding-bottom: 20px;
 }
+
+#quake {
+    position: absolute;
+    bottom:0px;
+    left:0px;
+}

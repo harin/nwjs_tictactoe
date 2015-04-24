@@ -1,6 +1,6 @@
 var lastTurn;
 var starter;
-
+var sentQuake = false;
 /*
 jQuery stuff*/
 $('#send').on('click', function(){
@@ -131,6 +131,11 @@ $('#onlineuserlist-btn').on('click', function(){
     $('#onlineuserlist').removeClass('invisible');
 });
 
+$('#quake').on('click', function(){
+    sentQuake = true;
+    client_socket.emit('quake');
+});
+
 
 //Clear all XO in table
 var reset_board = function(){
@@ -142,7 +147,7 @@ var qCounter=0;
 function quake() 
 { 
   // the horizontal displacement 
-  var deltaX=1; 
+  var deltaX=10; 
   // make sure the browser support the moveBy method 
   if (window.moveBy) 
   { 

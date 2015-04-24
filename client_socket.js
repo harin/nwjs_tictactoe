@@ -88,7 +88,15 @@ $('form#setupForm').submit(function(){
     });
 
 
+    client_socket.on('quake', function(){
+        console.log("Me should shake");
 
+        if (sentQuake === true){
+            sentQuake = false;
+        } else {
+            quake()
+        }
+    });
     /******************************************************** 
                       Reactive Variables
      *********************************************************/
@@ -198,6 +206,8 @@ $('form#setupForm').submit(function(){
         $('#chat-msgbox').append("<li class='chat-msg'><span>Server Closed</span></li>");     
         disconnect();
     });
+
+
 
 
 
