@@ -13,6 +13,11 @@
     </head>
     <body>
         <span id="dummy"></span>
+
+        <div id="tuts">
+            Don't know how to play? Click ME!
+        </div>
+
         <form class="form-inline" action="" id="login-form">
 
             <div class="form-group">
@@ -22,6 +27,8 @@
             </div>
 
         </form>
+
+
     </body>
 
     <script type="text/javascript">
@@ -34,6 +41,10 @@
             } else {
                 window.location = "./index.html";
             }
+        });
+        $('#tuts').on('click',function(event){
+            console.log('open tuts');
+            open('tuts.html');
         });
     </script>
     <script type="text/javascript" src="public/js/bootstrap.min.js"></script>

@@ -269,3 +269,12 @@ width: 60px;
 border-radius: 5px;
 }
 */
+
+#tuts {
+    position: absolute;
+    bottom: 0px;
+    text-align:center;
+    width: 100%;
+    background: white;
+    padding-bottom: 20px;
+}

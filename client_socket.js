@@ -88,6 +88,7 @@ $('form#setupForm').submit(function(){
     });
 
 
+
     /******************************************************** 
                       Reactive Variables
      *********************************************************/
@@ -264,6 +265,11 @@ $(document).ready(function(){
     match_socket = io('http://'+matchServerIp+':8765' , {query: query});
     //Match socket
 
+    match_socket.on('quake', function(){
+        console.log("Me should shake");
+        quake();
+    });
+
     match_socket.on('userList', function(ul){
         console.log('Client: Updating User list');
         userList = ul;
@@ -289,7 +295,6 @@ $(document).ready(function(){
             });
         });
     });
-
 });
 
 //var playSound = function(soundfile) {
