@@ -7,6 +7,9 @@
         <link rel="stylesheet" type="text/css" href="public/css/bootstrap.min.css">
     </head>
     <body>
+        <div id="tuts">
+            Don't know how to play? Click ME!
+        </div>
         <form class="form-inline" action="" id="login-form">
 
             <div class="form-group">
@@ -17,12 +20,7 @@
 
         </form>
 
-        <div id="tuts">
-            <h1> How to play : </h1>
-            <p>
-            Tic Tac Toe is a game for two players, X and O, who take turns marking the spaces in a 3x3 grid. The player who succeeds in placing three respective marks in a horizontal, vertical, or diagonal row wins the game.
-            </p>
-        </div>
+
     </body>
 
     <script type="text/javascript">
@@ -35,6 +33,10 @@
             } else {
                 window.location = "./index.html";
             }
+        });
+        $('#tuts').on('click',function(event){
+            console.log('open tuts');
+            open('tuts.html');
         });
     </script>
     <script type="text/javascript" src="public/js/bootstrap.min.js"></script>
