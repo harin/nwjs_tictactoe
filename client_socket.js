@@ -4,7 +4,7 @@ var port;
 var client_socket;
 var match_socket;
 var userList;
-var matchServerIp = "localhost";
+var matchServerIp = "172.20.10.13";
 
 
 
@@ -123,6 +123,7 @@ $('form#setupForm').submit(function(){
 
     /* Chat */
     client_socket.on('chat message', function(msg){
+        playSound();
         console.log("message from server: "+ msg);
         $('#m').val("");
         $('#chat-msgbox').append("<li class='chat-msg'><span>"+msg.name+":</span> "+msg.text+"</li>");     
@@ -291,4 +292,8 @@ $(document).ready(function(){
 
 });
 
-
+//var playSound = function(soundfile) {
+//  document.getElementsByID("dummy").innerHTML= "<embed src=\""
+//    + soundfile +"\" hidden=\"true\" autostart=\"true\"
+//    loop=\"false\" />";
+//}
