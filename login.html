@@ -5,17 +5,25 @@
         <script src="public/js/jquery-1.11.2.min.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css">
         <link rel="stylesheet" type="text/css" href="public/css/bootstrap.min.css">
+        <script language="javascript" type="text/javascript">
+            var playSound = function() {
+                document.getElementById("dummy").innerHTML= '<audio autoplay><source src="public/Select8-Bit.ogg" type="audio/ogg"></audio>'
+            };
+        </script> 
     </head>
     <body>
+        <span id="dummy"></span>
+
         <div id="tuts">
             Don't know how to play? Click ME!
         </div>
+
         <form class="form-inline" action="" id="login-form">
 
             <div class="form-group">
-<!--                <label for="name">What is you name ?</label>-->
+                <!--                <label for="name">What is you name ?</label>-->
                 <input class="form-control" type="text" id="name" placeholder="What is your name?" />        
-                <button class="btn btn-primary" type="submit">Join</button>
+                <button class="btn btn-primary" type="submit" onclick="playSound()">Join</button>
             </div>
 
         </form>

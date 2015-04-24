@@ -20,6 +20,7 @@ $('#send').on('click', function(){
 });
 
 $('.xo').on('click', function(e){
+    playSound();
     var row = $(this).parent().data('row');
     var col = $(this).data('col');
     //console.log(row +','+col);
